@@ -232,7 +232,7 @@ button { font: inherit; }
   display: flex; align-items: center; gap: 12px;
   animation: fadeUp var(--dur-slow) var(--ease-out) 0.15s both;
 }
-.hero-label::before { content:''; display:block; width:36px; height:1px; background:var(--gold); }
+.hero-label::before, .hero-label::after { content:''; display:block; width:36px; height:1px; background:var(--gold); flex-shrink:0; }
 
 .hero-h1 {
   font-family: 'Montserrat', sans-serif;
@@ -763,6 +763,8 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 @media (max-width:640px) {
   .container { padding:0 20px; }
   .hero-left { padding:110px 0 44px; }
+  .hero-label { font-size:0.62rem; letter-spacing:0.2em; gap:10px; white-space:nowrap; }
+  .hero-label::before, .hero-label::after { width:24px; }
   .hero-btns .btn { width:100%; }
   .process-steps { grid-template-columns:1fr; gap:40px; }
   .orc-card { padding:30px 20px 28px; }
