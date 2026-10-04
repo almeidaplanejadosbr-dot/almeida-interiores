@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Almeida Interiores — Inteligência em Espaços Compactos</title>
-<meta name="description" content="Projetos e execução completa para studios e apartamentos compactos: marcenaria planejada, acabamentos, iluminação e entrega pronta para morar. Solicite seu orçamento.">
+<title>Studios e Apartamentos Planejados em SP | Almeida Interiores</title>
+<meta name="description" content="Projeto, marcenaria planejada e execução completa para studios, apartamentos e ambientes em São Paulo e região metropolitana. Do projeto 3D à entrega. Solicite seu orçamento.">
 <meta name="theme-color" content="#2A1508">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
@@ -14,13 +14,51 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Almeida Interiores">
-<meta property="og:title" content="Almeida Interiores — Inteligência em Espaços Compactos">
-<meta property="og:description" content="Projeto, marcenaria planejada e execução completa para studios e apartamentos compactos. Solicite seu orçamento.">
+<meta property="og:title" content="Almeida Interiores | Studios e Apartamentos Planejados em São Paulo">
+<meta property="og:description" content="Projeto, marcenaria planejada e execução completa para studios e apartamentos em São Paulo e região metropolitana. Solicite seu orçamento.">
 <meta property="og:image" content="https://almeidainteriores.com.br/assets/og-almeida.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Almeida Interiores — sala e cozinha planejadas em apartamento compacto">
 <meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": "https://almeidainteriores.com.br/#empresa",
+  "name": "Almeida Interiores",
+  "legalName": "SGRG Arquitetura e Marcenaria Ltda",
+  "taxID": "67.896.314/0001-95",
+  "description": "Projeto, marcenaria planejada e execução completa para studios, apartamentos e ambientes em São Paulo e região metropolitana.",
+  "url": "https://almeidainteriores.com.br/",
+  "logo": "https://almeidainteriores.com.br/assets/logo-almeida.png",
+  "image": "https://almeidainteriores.com.br/assets/og-almeida.jpg",
+  "telephone": "+55 11 91150-1690",
+  "email": "almeidaplanejadosbr@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Praça Dr. João Mendes, 42, Sala A17, Conj. 177",
+    "addressLocality": "São Paulo",
+    "addressRegion": "SP",
+    "postalCode": "01501-907",
+    "addressCountry": "BR"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "São Paulo"
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Região Metropolitana de São Paulo"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/almeida_interior/"
+  ]
+}
+</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18311745949"></script>
@@ -233,7 +271,7 @@ button { font: inherit; }
 .hero-left { position: relative; z-index: 1; padding: 80px 0; max-width: 560px; }
 
 .hero-label {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif; font-weight: 400;
   font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
   color: var(--gold); margin-bottom: 1.6rem;
   display: flex; align-items: center; gap: 12px;
@@ -453,6 +491,7 @@ fieldset.field { border: 0; padding: 0; margin: 0; }
 .field.full { grid-column: 1 / -1; }
 
 .field > label, .field > .field-label {
+  margin-bottom: 0;
   font-family: 'Montserrat', sans-serif; font-weight: 700;
   font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--brown-dark);
@@ -491,6 +530,25 @@ select.input {
 .input-suffix input[type=number] { -moz-appearance: textfield; }
 
 .choice-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 0; }
+.choice-group--multi { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.choice.check label::before { border-radius: 3px; }
+.choice.check input:checked + label::before {
+  background: var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2.5,6.2 5,8.5 9.5,3.5'/%3E%3C/svg%3E") center/12px no-repeat;
+  box-shadow: none;
+}
+.form-group-title {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-muted); margin: 0 0 18px;
+}
+.form-group-title::after { content: ''; flex: 1; height: 1px; background: rgba(59,31,14,0.12); }
+.form-grid + .form-group-title { margin-top: 32px; }
+.field > legend { float: left; width: 100%; padding: 0; margin-bottom: 2px; }
+.field > legend + .field-hint { margin-top: -6px; }
+#field-local.highlight .input { border-color: var(--gold); background: var(--icon-bg); }
+#field-local.highlight .field-hint { color: var(--brown-dark); font-weight: 700; }
+.form-note a { color: var(--brown-dark); text-decoration: underline; text-underline-offset: 2px; }
 .choice { position: relative; }
 .choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
 .choice label {
@@ -509,6 +567,11 @@ select.input {
 .choice input:checked + label { border-color: var(--gold); background: var(--icon-bg); }
 .choice input:checked + label::before { border-color: var(--gold); box-shadow: inset 0 0 0 4px var(--white), inset 0 0 0 8px var(--gold); }
 .choice input:focus-visible + label { box-shadow: 0 0 0 3px rgba(200,132,26,0.25); }
+.choice input:disabled { cursor: not-allowed; }
+.choice input:disabled + label { opacity: 0.4; cursor: not-allowed; }
+/* Mesmo sem JavaScript: com "Apartamento completo" marcado, os avulsos ficam travados */
+.choice-group--multi:has(#f-amb-completo:checked) .choice:not(:first-child) input { pointer-events: none; }
+.choice-group--multi:has(#f-amb-completo:checked) .choice:not(:first-child) label { opacity: 0.4; }
 
 .field-hint { font-size: 0.82rem; color: var(--text-warm); line-height: 1.5; }
 .field-error {
@@ -532,7 +595,7 @@ select.input {
 .consent a { color: var(--brown-dark); text-decoration: underline; text-underline-offset: 2px; }
 .consent a:hover { color: var(--gold-muted); }
 
-.form-actions { margin-top: 8px; }
+.form-actions { margin-top: 32px; }
 .form-actions .btn { width: 100%; padding: 17px 24px; }
 .form-actions .btn[disabled] { opacity: 0.7; cursor: progress; transform: none; }
 .form-note {
@@ -776,6 +839,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   .process-steps { grid-template-columns:1fr; gap:40px; }
   .orc-card { padding:30px 20px 28px; }
   .form-grid { grid-template-columns:1fr; }
+  .choice-group--stack { grid-template-columns:1fr; }
   .cta-btns { flex-direction:column; align-items:center; }
   .cta-btns .btn { width:100%; max-width:320px; }
   .footer-inner { flex-direction:column; align-items:flex-start; }
@@ -867,12 +931,12 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   </div>
   <div class="container">
     <div class="hero-left">
-      <p class="hero-label">Studio &amp; Apartamentos Planejados</p>
-      <h1 class="hero-h1">
+      <h1 class="hero-label">Studios &amp; Apartamentos Planejados</h1>
+      <p class="hero-h1">
         INTELIGÊNCIA<br>EM ESPAÇOS
         <span class="accent">COMPACTOS</span>
-      </h1>
-      <p class="hero-sub">Mais que móveis, entregamos o cenário da sua nova fase.</p>
+      </p>
+      <p class="hero-sub">Mais que móveis, entregamos o cenário da sua nova fase. Projetos completos em São Paulo e região metropolitana.</p>
       <div class="hero-btns">
         <a href="#orcamento" class="btn btn-gold">
           Solicitar Orçamento
@@ -896,7 +960,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     <h2 class="section-title">
       O SEU PARCEIRO<br>DE <span class="accent">CONFIANÇA</span>
     </h2>
-    <p>Somos <strong>especialistas em transformar studios e apartamentos</strong> com precisão técnica e carinho em cada detalhe. Cada projeto é tratado como único, pensado para a sua vida e para o seu espaço.</p>
+    <p>Somos <strong>especialistas em transformar studios e apartamentos</strong> em São Paulo e região metropolitana, com precisão técnica e carinho em cada detalhe. Cada projeto é tratado como único, pensado para a sua vida e para o seu espaço.</p>
     <div class="quote-block">
       <p>"Você nos entrega as chaves, e nós entregamos o seu sonho pronto."</p>
     </div>
@@ -962,7 +1026,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       <h2 class="section-title-lg reveal">
         CONTE SOBRE O<br>SEU <span class="accent">IMÓVEL</span>
       </h2>
-      <p class="orc-lead reveal">Com algumas informações sobre o espaço, nossa equipe prepara uma proposta sob medida para o seu apartamento.</p>
+      <p class="orc-lead reveal">Com algumas informações sobre o espaço, nossa equipe prepara uma proposta sob medida para o seu projeto.</p>
       <ol class="orc-steps reveal">
         <li>
           <span class="step-n">01</span>
@@ -991,75 +1055,79 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       <form id="leadForm" novalidate>
         <!-- Campo anti-spam: invisível para pessoas, robôs costumam preenchê-lo -->
         <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <p class="form-group-title">Sobre o projeto</p>
+        <div class="form-grid">
+          <fieldset class="field full" aria-describedby="e-ambientes">
+            <legend class="field-label">O que você precisa? *</legend>
+            <span class="field-hint" id="h-ambientes">Marque uma ou mais opções.</span>
+            <div class="choice-group choice-group--multi">
+              <div class="choice check"><input type="checkbox" id="f-amb-completo" name="ambientes" value="Apartamento completo"><label for="f-amb-completo">Apartamento completo</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-cozinha" name="ambientes" value="Cozinha"><label for="f-amb-cozinha">Cozinha</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-dormitorio" name="ambientes" value="Dormitório"><label for="f-amb-dormitorio">Dormitório</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-sala" name="ambientes" value="Sala"><label for="f-amb-sala">Sala</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-banheiro" name="ambientes" value="Banheiro"><label for="f-amb-banheiro">Banheiro</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-office" name="ambientes" value="Home office"><label for="f-amb-office">Home office</label></div>
+              <div class="choice check"><input type="checkbox" id="f-amb-outro" name="ambientes" value="Outro ambiente"><label for="f-amb-outro">Outro ambiente</label></div>
+            </div>
+            <span class="field-error" id="e-ambientes">Selecione pelo menos uma opção.</span>
+          </fieldset>
+
+          <div class="field full">
+            <label for="f-metragem">Metragem aproximada do imóvel *</label>
+            <div class="input-suffix">
+              <input class="input" type="number" id="f-metragem" name="metragem" inputmode="decimal" min="10" max="2000" step="any" placeholder="Ex.: 32" required aria-describedby="e-metragem">
+              <span>m²</span>
+            </div>
+            <span class="field-error" id="e-metragem">Informe a metragem aproximada (entre 10 e 2.000 m²).</span>
+          </div>
+
+          <fieldset class="field full" aria-describedby="e-chaves">
+            <legend class="field-label">Quando você recebe as chaves? *</legend>
+            <div class="choice-group choice-group--stack">
+              <div class="choice"><input type="radio" id="f-chaves-1" name="chaves" value="Já está com as chaves / já mora no imóvel"><label for="f-chaves-1">Já estou com as chaves / já moro</label></div>
+              <div class="choice"><input type="radio" id="f-chaves-2" name="chaves" value="Em até 3 meses"><label for="f-chaves-2">Em até 3 meses</label></div>
+              <div class="choice"><input type="radio" id="f-chaves-3" name="chaves" value="De 3 a 6 meses"><label for="f-chaves-3">De 3 a 6 meses</label></div>
+              <div class="choice"><input type="radio" id="f-chaves-4" name="chaves" value="Daqui a mais de 6 meses"><label for="f-chaves-4">Daqui a mais de 6 meses</label></div>
+            </div>
+            <span class="field-error" id="e-chaves">Indique quando recebe as chaves.</span>
+          </fieldset>
+
+          <fieldset class="field full" aria-describedby="e-planta">
+            <legend class="field-label">Possui a planta do imóvel? *</legend>
+            <div class="choice-group">
+              <div class="choice"><input type="radio" id="f-planta-sim" name="planta" value="Sim"><label for="f-planta-sim">Sim, tenho a planta</label></div>
+              <div class="choice"><input type="radio" id="f-planta-nao" name="planta" value="Não"><label for="f-planta-nao">Não tenho</label></div>
+            </div>
+            <span class="field-hint" id="h-planta" hidden>Depois do envio, você pode mandar a planta pelo WhatsApp (foto ou PDF).</span>
+            <span class="field-error" id="e-planta">Indique se possui a planta.</span>
+          </fieldset>
+
+          <div class="field full" id="field-local">
+            <label for="f-local">Nome do empreendimento ou bairro <span class="opt">(opcional)</span></label>
+            <input class="input" type="text" id="f-local" name="local" maxlength="140" placeholder="Ex.: Residencial Vila Nova, Pinheiros" aria-describedby="h-local">
+            <span class="field-hint" id="h-local" hidden></span>
+          </div>
+        </div>
+
+        <p class="form-group-title">Seus dados</p>
         <div class="form-grid">
           <div class="field full">
-            <label for="f-nome">Nome completo *</label>
+            <label for="f-nome">Nome *</label>
             <input class="input" type="text" id="f-nome" name="nome" autocomplete="name" required maxlength="120" aria-describedby="e-nome">
             <span class="field-error" id="e-nome">Informe seu nome.</span>
           </div>
 
           <div class="field">
-            <label for="f-telefone">Telefone / WhatsApp *</label>
+            <label for="f-telefone">WhatsApp *</label>
             <input class="input" type="tel" id="f-telefone" name="telefone" autocomplete="tel-national" inputmode="tel" placeholder="(11) 90000-0000" required maxlength="16" aria-describedby="e-telefone">
             <span class="field-error" id="e-telefone">Informe um telefone com DDD.</span>
           </div>
 
           <div class="field">
-            <label for="f-email">E-mail *</label>
-            <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email" required maxlength="160" aria-describedby="e-email">
-            <span class="field-error" id="e-email">Informe um e-mail válido.</span>
-          </div>
-
-          <div class="field">
-            <label for="f-tipo">Tipo de apartamento *</label>
-            <select class="input" id="f-tipo" name="tipo" required aria-describedby="e-tipo">
-              <option value="" selected disabled>Selecione</option>
-              <option>Studio</option>
-              <option>1 dormitório</option>
-              <option>2 dormitórios</option>
-              <option>3 dormitórios ou mais</option>
-              <option>Outro</option>
-            </select>
-            <span class="field-error" id="e-tipo">Selecione o tipo de apartamento.</span>
-          </div>
-
-          <div class="field">
-            <label for="f-metragem">Metragem *</label>
-            <div class="input-suffix">
-              <input class="input" type="number" id="f-metragem" name="metragem" inputmode="decimal" min="10" max="2000" step="any" placeholder="Ex.: 32" required aria-describedby="e-metragem">
-              <span>m²</span>
-            </div>
-            <span class="field-error" id="e-metragem">Informe a metragem (entre 10 e 2.000 m²).</span>
-          </div>
-
-          <div class="field full">
-            <label for="f-local">Empreendimento ou bairro <span class="opt">(opcional)</span></label>
-            <input class="input" type="text" id="f-local" name="local" maxlength="140" placeholder="Ex.: Residencial Vila Nova, Pinheiros">
-          </div>
-
-          <fieldset class="field full" aria-describedby="e-planta">
-            <legend class="field-label" style="margin-bottom:8px">Possui a planta do apartamento? *</legend>
-            <div class="choice-group">
-              <div class="choice">
-                <input type="radio" id="f-planta-sim" name="planta" value="Sim" required>
-                <label for="f-planta-sim">Sim, tenho a planta</label>
-              </div>
-              <div class="choice">
-                <input type="radio" id="f-planta-nao" name="planta" value="Não">
-                <label for="f-planta-nao">Não tenho</label>
-              </div>
-            </div>
-            <span class="field-hint" id="h-planta" hidden>Depois do envio, você pode mandar a planta pelo WhatsApp (foto ou PDF).</span>
-            <span class="field-hint" id="h-planta-nao" hidden>Sem problema: fazemos o levantamento das medidas na visita técnica.</span>
-            <span class="field-error" id="e-planta">Indique se possui a planta.</span>
-          </fieldset>
-
-          <div class="field full">
-            <label class="consent" for="f-consent">
-              <input type="checkbox" id="f-consent" name="consentimento" required aria-describedby="e-consent">
-              <span>Li e concordo com a <a href="politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a> e autorizo a Almeida Interiores a entrar em contato sobre este orçamento.</span>
-            </label>
-            <span class="field-error" id="e-consent">É preciso concordar para enviarmos o orçamento.</span>
+            <label for="f-email">E-mail <span class="opt">(opcional)</span></label>
+            <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email" maxlength="160" aria-describedby="e-email">
+            <span class="field-error" id="e-email">Confira o e-mail digitado.</span>
           </div>
         </div>
 
@@ -1068,7 +1136,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
             Enviar solicitação
             <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow"/></svg>
           </button>
-          <p class="form-note">Seus dados chegam direto à nossa equipe. Para agilizar, também abrimos o WhatsApp com a mensagem pronta.</p>
+          <p class="form-note">Ao enviar, você concorda com a nossa <a href="politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>. Seus dados chegam direto à nossa equipe e abrimos o WhatsApp para agilizar o contato.</p>
         </div>
       </form>
 
@@ -1181,7 +1249,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       VAMOS
       <span class="accent">CONVERSAR?</span>
     </h2>
-    <p class="cta-sub reveal">Mande uma mensagem agora e receba um orçamento personalizado sem compromisso. Nossa equipe responde em até 2 horas.</p>
+    <p class="cta-sub reveal">Mande uma mensagem agora e receba um orçamento personalizado sem compromisso. Nossa equipe responde em até 2 horas. Atendemos toda a capital e a região metropolitana de São Paulo.</p>
     <div class="cta-btns reveal">
       <a href="https://wa.me/5511911501690" target="_blank" rel="noopener" class="btn btn-wa">
         <svg width="18" height="18" aria-hidden="true"><use href="#icon-wa"/></svg>
@@ -1293,6 +1361,9 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   var form = document.getElementById('leadForm');
   var card = document.getElementById('orcCard');
   var phone = document.getElementById('f-telefone');
+  var localField = document.getElementById('field-local');
+  var localHint = document.getElementById('h-local');
+  var LOCAL_HINT_SEM_PLANTA = 'Sem problema! Nos diga o nome do empreendimento que buscamos a planta para você.';
 
   function formatPhone(v) {
     var d = v.replace(/\D/g, '').slice(0, 11);
@@ -1303,43 +1374,72 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   }
   phone.addEventListener('input', function () { phone.value = formatPhone(phone.value); });
 
+  function checked(name) {
+    return Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(function (i) { return i.value; });
+  }
+
   var validators = {
+    ambientes: function () { return checked('ambientes').length > 0; },
+    metragem: function () { var m = parseFloat(String(form.metragem.value).replace(',', '.')); return m >= 10 && m <= 2000; },
+    chaves: function () { return checked('chaves').length === 1; },
+    planta: function () { return checked('planta').length === 1; },
     nome: function () { return form.nome.value.trim().length >= 3; },
     telefone: function () { var n = form.telefone.value.replace(/\D/g, '').length; return n === 10 || n === 11; },
-    email: function () { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.value.trim()); },
-    tipo: function () { return form.tipo.value !== ''; },
-    metragem: function () { var m = parseFloat(String(form.metragem.value).replace(',', '.')); return m >= 10 && m <= 2000; },
-    planta: function () { return !!form.querySelector('input[name="planta"]:checked'); },
-    consentimento: function () { return form.consentimento.checked; }
+    email: function () { var v = form.email.value.trim(); return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
   };
   var fieldOf = {
-    nome: 'f-nome', telefone: 'f-telefone', email: 'f-email', tipo: 'f-tipo',
-    metragem: 'f-metragem', planta: 'f-planta-sim', consentimento: 'f-consent'
+    ambientes: 'f-amb-completo', metragem: 'f-metragem', chaves: 'f-chaves-1', planta: 'f-planta-sim',
+    nome: 'f-nome', telefone: 'f-telefone', email: 'f-email'
   };
+  var groups = { ambientes: true, chaves: true, planta: true };
 
   function check(name) {
     var ok = validators[name]();
     var input = document.getElementById(fieldOf[name]);
-    var field = input.closest('.field');
-    field.classList.toggle('invalid', !ok);
-    if (name !== 'planta') input.setAttribute('aria-invalid', String(!ok));
+    input.closest('.field').classList.toggle('invalid', !ok);
+    if (!groups[name]) input.setAttribute('aria-invalid', String(!ok));
     return ok;
   }
 
-  // Valida ao sair do campo; depois do primeiro erro, revalida enquanto digita
-  Object.keys(fieldOf).forEach(function (name) {
+  // Campos de texto: valida ao sair; depois do primeiro erro, revalida enquanto digita
+  ['metragem', 'nome', 'telefone', 'email'].forEach(function (name) {
     var input = document.getElementById(fieldOf[name]);
-    var evt = (name === 'planta' || name === 'consentimento' || name === 'tipo') ? 'change' : 'blur';
-    input.addEventListener(evt, function () { check(name); });
+    input.addEventListener('blur', function () { check(name); });
     input.addEventListener('input', function () {
       if (input.closest('.field').classList.contains('invalid')) check(name);
     });
   });
 
+  // "Apartamento completo" já inclui todos os ambientes: desmarca e trava os avulsos
+  var completo = document.getElementById('f-amb-completo');
+  var avulsos = Array.prototype.slice.call(form.querySelectorAll('input[name="ambientes"]'))
+    .filter(function (o) { return o !== completo; });
+  var ambHint = document.getElementById('h-ambientes');
+  var AMB_HINT = ambHint.textContent;
+  function syncAmbientes() {
+    avulsos.forEach(function (o) {
+      if (completo.checked) o.checked = false;
+      o.disabled = completo.checked;
+    });
+    ambHint.textContent = completo.checked ? 'O apartamento completo já inclui todos os ambientes.' : AMB_HINT;
+  }
+  form.querySelectorAll('input[name="ambientes"]').forEach(function (box) {
+    box.addEventListener('change', function () { syncAmbientes(); check('ambientes'); });
+  });
+
+  form.querySelectorAll('input[name="chaves"]').forEach(function (r) {
+    r.addEventListener('change', function () { check('chaves'); });
+  });
+
+  // Sem planta: destaca o campo do empreendimento
   form.querySelectorAll('input[name="planta"]').forEach(function (r) {
     r.addEventListener('change', function () {
-      document.getElementById('h-planta').hidden = r.value !== 'Sim';
-      document.getElementById('h-planta-nao').hidden = r.value !== 'Não';
+      var semPlanta = r.value === 'Não';
+      document.getElementById('h-planta').hidden = semPlanta;
+      localField.classList.toggle('highlight', semPlanta);
+      localHint.textContent = semPlanta ? LOCAL_HINT_SEM_PLANTA : '';
+      localHint.hidden = !semPlanta;
       check('planta');
     });
   });
@@ -1349,13 +1449,16 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       'Olá! Gostaria de solicitar um orçamento.',
       '',
       'Nome: ' + d.nome,
-      'Telefone: ' + d.telefone,
-      'E-mail: ' + d.email,
-      'Apartamento: ' + d.tipo,
-      'Metragem: ' + d.metragem + ' m²'
+      'Telefone: ' + d.telefone
     ];
+    if (d.email) lines.push('E-mail: ' + d.email);
+    lines.push(
+      'Precisa de: ' + d.ambientes,
+      'Metragem do imóvel: ' + d.metragem + ' m²',
+      'Chaves: ' + d.chaves,
+      'Possui planta: ' + d.planta
+    );
     if (d.local) lines.push('Empreendimento/bairro: ' + d.local);
-    lines.push('Possui planta: ' + d.planta);
     return lines.join('\n');
   }
 
@@ -1371,10 +1474,11 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       nome: form.nome.value.trim(),
       telefone: form.telefone.value.trim(),
       email: form.email.value.trim(),
-      tipo: form.tipo.value,
+      ambientes: checked('ambientes').join(', '),
       metragem: String(form.metragem.value).replace('.', ','),
-      local: form.local.value.trim(),
-      planta: form.querySelector('input[name="planta"]:checked').value
+      chaves: checked('chaves')[0],
+      planta: checked('planta')[0],
+      local: form.local.value.trim()
     };
 
     var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(data));
@@ -1385,14 +1489,14 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       var payload = new FormData();
       payload.append('Nome', data.nome);
       payload.append('Telefone', data.telefone);
-      payload.append('E-mail', data.email);
-      payload.append('Tipo de apartamento', data.tipo);
-      payload.append('Metragem', data.metragem + ' m²');
-      payload.append('Empreendimento/bairro', data.local || '—');
+      payload.append('E-mail', data.email || '—');
+      payload.append('Precisa de', data.ambientes);
+      payload.append('Metragem do imóvel', data.metragem + ' m²');
+      payload.append('Chaves', data.chaves);
       payload.append('Possui planta', data.planta);
-      payload.append('Consentimento LGPD', 'Sim, aceitou a Política de Privacidade');
-      payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome);
-      payload.append('_replyto', data.email);
+      payload.append('Empreendimento/bairro', data.local || '—');
+      payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome + ' (' + data.ambientes + ')');
+      if (data.email) payload.append('_replyto', data.email);
       payload.append('_gotcha', form._gotcha.value);
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
@@ -1421,11 +1525,14 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 
   document.getElementById('leadReset').addEventListener('click', function () {
     form.reset();
+    syncAmbientes();
     document.getElementById('h-planta').hidden = true;
-    document.getElementById('h-planta-nao').hidden = true;
+    localField.classList.remove('highlight');
+    localHint.textContent = '';
+    localHint.hidden = true;
     form.querySelectorAll('.invalid').forEach(function (f) { f.classList.remove('invalid'); });
     card.classList.remove('sent');
-    document.getElementById('f-nome').focus();
+    completo.focus();
   });
 })();
 </script>
