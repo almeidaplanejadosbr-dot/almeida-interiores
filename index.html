@@ -299,16 +299,13 @@ button { font: inherit; }
 
 .qs-checks { list-style: none; margin-bottom: 0; }
 .qs-checks li {
-  display: flex; align-items: center; gap: 12px;
-  color: var(--text-body); font-size: 0.92rem;
+  display: flex; align-items: center; gap: 14px;
+  color: var(--text-body); font-size: 0.95rem;
   padding: 7px 0;
 }
-.qs-checks li .check-icon {
-  width: 22px; height: 22px; border-radius: 50%;
-  background: var(--gold); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
+.qs-checks li::before {
+  content: ''; width: 18px; height: 1px; background: var(--gold); flex-shrink: 0;
 }
-.qs-checks li .check-icon svg { width:12px; height:12px; }
 
 .qs-right { position: relative; overflow: hidden; }
 .qs-right img { height: 100%; object-fit: cover; object-position: 38% center; }
@@ -347,65 +344,42 @@ button { font: inherit; }
 }
 .section-title-lg .accent { color: var(--gold); }
 
-.process-grid {
+.process-steps {
+  list-style: none;
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem; margin-top: 0;
+  gap: 0 40px; text-align: left;
 }
-
-.process-card, .dif-card {
-  background: var(--white);
-  border: 1px solid rgba(59,31,14,0.08);
-  border-radius: var(--radius);
+.step {
   position: relative;
-  overflow: hidden;
+  padding-top: 40px;
+  border-top: 1px solid rgba(59,31,14,0.16);
 }
-.process-card::before, .dif-card::before {
-  content: ''; position: absolute; left: 0; top: 0; height: 2px; width: 100%;
+/* Linha dourada que se desenha da esquerda para a direita ao aparecer */
+.step::after {
+  content: ''; position: absolute; left: 0; top: -1px; height: 1px; width: 100%;
   background: var(--gold); transform: scaleX(0); transform-origin: left;
-  transition: transform 0.7s var(--ease-out);
+  transition: transform 1.2s var(--ease-out);
 }
-.process-card:hover::before, .dif-card:hover::before { transform: scaleX(1); }
-
-.process-card {
-  padding: 36px 26px;
-  text-align: left;
+.step.visible::after { transform: scaleX(1); }
+.step:nth-child(2)::after { transition-delay: 0.2s; }
+.step:nth-child(3)::after { transition-delay: 0.4s; }
+.step:nth-child(4)::after { transition-delay: 0.6s; }
+.step::before {
+  content: ''; position: absolute; left: 0; top: -4px; z-index: 1;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
 }
-/* O hover usa "translate" (separado do "transform" do reveal) para ter ritmo próprio */
-.process-card, .dif-card {
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out),
-              translate var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+.step-num {
+  display: block;
+  font-family: 'Montserrat', sans-serif; font-weight: 300;
+  font-size: 3rem; line-height: 1; letter-spacing: -0.02em;
+  color: var(--gold); margin-bottom: 22px;
 }
-.process-card:hover, .dif-card:hover {
-  translate: 0 -4px;
-  box-shadow: 0 22px 44px -24px rgba(59,31,14,0.28);
-}
-
-.process-num {
-  position: absolute; bottom: 16px; right: 20px;
-  font-family: 'Montserrat', sans-serif; font-weight: 900;
-  font-size: 3.5rem; color: rgba(200,132,26,0.12);
-  line-height: 1;
-}
-
-.process-icon-wrap {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: var(--icon-bg);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.3rem;
-}
-.process-icon-wrap svg { width:26px; height:26px; fill:none; stroke:var(--brown-dark); stroke-width:1.6; }
-
-.process-card h3 {
+.step h3 {
   font-family: 'Montserrat', sans-serif; font-weight: 800;
   font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--brown-dark); margin-bottom: 10px;
 }
-.process-card .mini-sep {
-  width: 28px; height: 1.5px; background: var(--gold); margin-bottom: 14px;
-}
-.process-card p {
-  font-size: 0.9rem; color: var(--text-warm); line-height: 1.7;
-}
+.step p { font-size: 0.93rem; color: var(--text-warm); line-height: 1.7; }
 
 /* ============================================================
    ORÇAMENTO (formulário)
@@ -604,17 +578,7 @@ select.input {
 .comp-head p { margin-top: 1.4rem; font-size: 1rem; line-height: 1.8; color: var(--text-warm); max-width: 400px; }
 
 .comp-items { list-style:none; border-top:1px solid rgba(59,31,14,0.14); }
-.comp-item {
-  display:flex; gap:20px; align-items:flex-start;
-  padding: 28px 0; border-bottom:1px solid rgba(59,31,14,0.14);
-}
-.comp-icon {
-  width:46px; height:46px; flex-shrink:0; border-radius:var(--radius);
-  background: var(--white);
-  border:1px solid rgba(200,132,26,0.3);
-  display:flex; align-items:center; justify-content:center;
-}
-.comp-icon svg { width:22px; height:22px; }
+.comp-item { padding: 28px 0; border-bottom:1px solid rgba(59,31,14,0.14); }
 .comp-text h4 {
   font-family:'Montserrat',sans-serif; font-weight:800;
   font-size:0.85rem; letter-spacing:0.07em; text-transform:uppercase;
@@ -634,31 +598,19 @@ select.input {
   text-align:center; margin-bottom: 3.2rem;
 }
 
-.dif-grid {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:1.25rem;
+.dif-list {
+  list-style: none;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0 72px;
+  border-bottom: 1px solid rgba(59,31,14,0.14);
 }
-
-.dif-card {
-  padding:30px 26px;
-  display:flex; gap:18px; align-items:flex-start;
-}
-
-.dif-icon {
-  width:48px; height:48px; flex-shrink:0; border-radius:var(--radius);
-  background: var(--icon-bg);
-  border: 1px solid rgba(200,132,26,0.2);
-  display:flex; align-items:center; justify-content:center;
-}
-.dif-icon svg { width:24px; height:24px; }
-
-.dif-content h4 {
+.dif-item { padding: 30px 0; border-top: 1px solid rgba(59,31,14,0.14); }
+.dif-item h4 {
   font-family:'Montserrat',sans-serif; font-weight:800;
-  font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase;
+  font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase;
   color:var(--brown-dark); margin-bottom:8px;
 }
-.dif-content .dif-sep { width:24px; height:1.5px; background:var(--gold); margin-bottom:10px; }
-.dif-content p { font-size:0.88rem; color:var(--text-warm); line-height:1.65; }
+.dif-item p { font-size:0.93rem; color:var(--text-warm); line-height:1.7; max-width: 480px; }
 
 .dif-cta { text-align:center; margin-top:3.4rem; }
 
@@ -784,7 +736,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
    ============================================================ */
 @media (max-width:1024px) {
   .container { padding:0 28px; }
-  .process-grid { grid-template-columns:repeat(2,1fr); }
+  .process-steps { grid-template-columns:repeat(2,1fr); gap:48px 40px; }
   .orc-grid { grid-template-columns:1fr; gap:48px; }
   .orc-intro { position:static; }
 }
@@ -803,7 +755,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   .comp-grid { grid-template-columns:1fr; gap:36px; }
   .qs-left { padding:72px 28px; }
   .qs-right { min-height:320px; }
-  .dif-grid { grid-template-columns:1fr; }
+  .dif-list { grid-template-columns:1fr; }
   #como-trabalhamos, #orcamento, #compromisso, #diferenciais { padding:84px 0; }
   #contato { padding:96px 0; }
 }
@@ -812,7 +764,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   .container { padding:0 20px; }
   .hero-left { padding:110px 0 44px; }
   .hero-btns .btn { width:100%; }
-  .process-grid { grid-template-columns:1fr; }
+  .process-steps { grid-template-columns:1fr; gap:40px; }
   .orc-card { padding:30px 20px 28px; }
   .form-grid { grid-template-columns:1fr; }
   .cta-btns { flex-direction:column; align-items:center; }
@@ -840,78 +792,6 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 <!-- SVG ICONS DEFS (reutilizáveis) -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Ruler/Planejamento -->
-    <symbol id="icon-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M2 12h20M2 12l3-3M2 12l3 3M7 7v10M12 5v14M17 7v10"/>
-    </symbol>
-    <!-- Hammer/Mão na Massa -->
-    <symbol id="icon-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M15 12l-8.5 8.5a2.12 2.12 0 01-3-3L12 9l3 3z"/>
-      <path d="M17.5 4.5l-1 1L20 9l1-1a2 2 0 00-2.83-2.83l-.67.67-2.83-2.84-.67.67A2 2 0 0017.5 4.5z"/>
-    </symbol>
-    <!-- Truck/Logística -->
-    <symbol id="icon-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="1" y="3" width="15" height="13" rx="1"/>
-      <path d="M16 8h4l3 3v5h-7V8z"/>
-      <circle cx="5.5" cy="18.5" r="2.5"/>
-      <circle cx="18.5" cy="18.5" r="2.5"/>
-    </symbol>
-    <!-- Eye/Olhar de Dono -->
-    <symbol id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-      <circle cx="12" cy="12" r="3"/>
-    </symbol>
-    <!-- Shield/Transparência -->
-    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      <polyline points="9,12 11,14 15,10"/>
-    </symbol>
-    <!-- Clock/Prazo -->
-    <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12,6 12,12 16,14"/>
-    </symbol>
-    <!-- Lock/Segurança -->
-    <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0110 0v4"/>
-    </symbol>
-    <!-- User/Acomp. Técnico -->
-    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
-    </symbol>
-    <!-- FileText/Detalhamento -->
-    <symbol id="icon-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-      <polyline points="14,2 14,8 20,8"/>
-      <line x1="16" y1="13" x2="8" y2="13"/>
-      <line x1="16" y1="17" x2="8" y2="17"/>
-      <polyline points="10,9 9,9 8,9"/>
-    </symbol>
-    <!-- CreditCard/Pagamento -->
-    <symbol id="icon-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-      <line x1="1" y1="10" x2="23" y2="10"/>
-    </symbol>
-    <!-- Award/Garantia -->
-    <symbol id="icon-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="8" r="6"/>
-      <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-    </symbol>
-    <!-- Box3D/Projeto 3D -->
-    <symbol id="icon-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-      <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
-      <line x1="12" y1="22.08" x2="12" y2="12"/>
-    </symbol>
-    <!-- PenTool/RRT Arquitetura -->
-    <symbol id="icon-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-      <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-      <path d="M2 2l7.586 7.586"/>
-      <circle cx="11" cy="11" r="2"/>
-    </symbol>
     <!-- WhatsApp -->
     <symbol id="icon-wa" viewBox="0 0 24 24" fill="currentColor">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -919,10 +799,6 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     <!-- Instagram -->
     <symbol id="icon-ig" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-    </symbol>
-    <!-- Checkmark -->
-    <symbol id="icon-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="2,6 5,9 10,3"/>
     </symbol>
   </defs>
 </svg>
@@ -1017,15 +893,12 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     </div>
     <ul class="qs-checks">
       <li>
-        <span class="check-icon"><svg stroke="#3B1F0E" aria-hidden="true"><use href="#icon-check"/></svg></span>
         Projeto personalizado do zero
       </li>
       <li>
-        <span class="check-icon"><svg stroke="#3B1F0E" aria-hidden="true"><use href="#icon-check"/></svg></span>
         Equipe técnica treinada
       </li>
       <li>
-        <span class="check-icon"><svg stroke="#3B1F0E" aria-hidden="true"><use href="#icon-check"/></svg></span>
         Atendimento direto com o responsável
       </li>
     </ul>
@@ -1045,44 +918,28 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     <h2 class="section-title-lg reveal">
       DOMÍNIO TOTAL<br>DO <span class="accent">PROCESSO</span>
     </h2>
-    <div class="process-grid">
-      <div class="process-card reveal">
-        <div class="process-icon-wrap">
-          <svg aria-hidden="true"><use href="#icon-ruler"/></svg>
-        </div>
+    <ol class="process-steps">
+      <li class="step reveal">
+        <span class="step-num">01</span>
         <h3>Planejamento Real</h3>
-        <div class="mini-sep"></div>
         <p>Projetos que respeitam cada centímetro do seu espaço. Levantamento técnico minucioso antes de qualquer obra.</p>
-        <div class="process-num">01</div>
-      </div>
-      <div class="process-card reveal">
-        <div class="process-icon-wrap">
-          <svg aria-hidden="true"><use href="#icon-hammer"/></svg>
-        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">02</span>
         <h3>Mão na Massa</h3>
-        <div class="mini-sep"></div>
         <p>Execução rigorosa com acabamento impecável. Nossa equipe cuida de cada detalhe com precisão artesanal.</p>
-        <div class="process-num">02</div>
-      </div>
-      <div class="process-card reveal">
-        <div class="process-icon-wrap">
-          <svg aria-hidden="true"><use href="#icon-truck"/></svg>
-        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">03</span>
         <h3>Logística Inteligente</h3>
-        <div class="mini-sep"></div>
         <p>Compra, entrega e instalação de tudo por nossa conta. Você não precisa se preocupar com absolutamente nada.</p>
-        <div class="process-num">03</div>
-      </div>
-      <div class="process-card reveal">
-        <div class="process-icon-wrap">
-          <svg aria-hidden="true"><use href="#icon-eye"/></svg>
-        </div>
+      </li>
+      <li class="step reveal">
+        <span class="step-num">04</span>
         <h3>Olhar de Dono</h3>
-        <div class="mini-sep"></div>
         <p>Só saímos com tudo testado e funcionando perfeitamente. Entregamos o imóvel como se fosse para nós mesmos.</p>
-        <div class="process-num">04</div>
-      </div>
-    </div>
+      </li>
+    </ol>
   </div>
 </section>
 
@@ -1240,27 +1097,18 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     <div class="reveal">
         <ul class="comp-items">
           <li class="comp-item">
-            <div class="comp-icon">
-              <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-shield"/></svg>
-            </div>
             <div class="comp-text">
               <h4>Transparência</h4>
               <p>Orçamento detalhado, sem surpresas. Você sabe exatamente o que está pagando antes de assinar qualquer contrato.</p>
             </div>
           </li>
           <li class="comp-item">
-            <div class="comp-icon">
-              <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-clock"/></svg>
-            </div>
             <div class="comp-text">
               <h4>Prazo é Sagrado</h4>
               <p>Cumprimos os prazos combinados com rigor. Sabemos que sua vida não para enquanto reformamos.</p>
             </div>
           </li>
           <li class="comp-item">
-            <div class="comp-icon">
-              <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-lock"/></svg>
-            </div>
             <div class="comp-text">
               <h4>Segurança</h4>
               <p>Do projeto ao pós-venda: seu lar protegido com seguro de execução e garantia de 5 anos.</p>
@@ -1279,68 +1127,32 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     <h2 class="section-title-lg reveal" style="text-align:center;">
       POR QUE ESCOLHER A<br><span class="accent">ALMEIDA INTERIORES?</span>
     </h2>
-    <div class="dif-grid">
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-user"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>Acompanhamento Técnico</h4>
-          <div class="dif-sep"></div>
-          <p>Responsável técnico presente em todas as etapas da obra, do início ao acabamento final.</p>
-        </div>
-      </div>
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-file"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>Detalhamento Executivo</h4>
-          <div class="dif-sep"></div>
-          <p>Documentação completa do projeto com memória descritiva e plantas técnicas.</p>
-        </div>
-      </div>
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-card"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>Pagamento Facilitado</h4>
-          <div class="dif-sep"></div>
-          <p>Parcelamento em até 10x, consulte juros. Condições especiais para pagamento à vista.</p>
-        </div>
-      </div>
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-award"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>Garantia Total</h4>
-          <div class="dif-sep"></div>
-          <p>Garantia completa de instalação e material. Nós compramos, instalamos e garantimos.</p>
-        </div>
-      </div>
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-box"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>Projeto 3D</h4>
-          <div class="dif-sep"></div>
-          <p>Visualize seu apartamento planejado antes do início da obra com renderização realista.</p>
-        </div>
-      </div>
-      <div class="dif-card reveal">
-        <div class="dif-icon">
-          <svg stroke="var(--gold)" aria-hidden="true"><use href="#icon-pen"/></svg>
-        </div>
-        <div class="dif-content">
-          <h4>RRT Arquitetura</h4>
-          <div class="dif-sep"></div>
-          <p>Responsabilidade técnica de arquitetura incluída em todos os projetos.</p>
-        </div>
-      </div>
-    </div>
+    <ul class="dif-list">
+      <li class="dif-item reveal">
+        <h4>Acompanhamento Técnico</h4>
+        <p>Responsável técnico presente em todas as etapas da obra, do início ao acabamento final.</p>
+      </li>
+      <li class="dif-item reveal">
+        <h4>Detalhamento Executivo</h4>
+        <p>Documentação completa do projeto com memória descritiva e plantas técnicas.</p>
+      </li>
+      <li class="dif-item reveal">
+        <h4>Pagamento Facilitado</h4>
+        <p>Parcelamento em até 10x, consulte juros. Condições especiais para pagamento à vista.</p>
+      </li>
+      <li class="dif-item reveal">
+        <h4>Garantia Total</h4>
+        <p>Garantia completa de instalação e material. Nós compramos, instalamos e garantimos.</p>
+      </li>
+      <li class="dif-item reveal">
+        <h4>Projeto 3D</h4>
+        <p>Visualize seu apartamento planejado antes do início da obra com renderização realista.</p>
+      </li>
+      <li class="dif-item reveal">
+        <h4>RRT Arquitetura</h4>
+        <p>Responsabilidade técnica de arquitetura incluída em todos os projetos.</p>
+      </li>
+    </ul>
     <div class="dif-cta reveal">
       <a href="#orcamento" class="btn btn-dark">
         Solicitar Orçamento
