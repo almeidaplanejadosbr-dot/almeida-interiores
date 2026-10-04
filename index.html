@@ -83,7 +83,11 @@
    RESET & VARIABLES
    ============================================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; font-size: 16px; }
+html {
+  scroll-behavior: smooth; scroll-padding-top: 72px; font-size: 16px;
+  /* Fundo da "tela" igual ao rodapé: o que sobrar abaixo dele (ou o efeito elástico do iPhone) fica escuro */
+  background-color: #150a03;
+}
 
 :root {
   --brown:       #3B1F0E;
@@ -123,6 +127,10 @@ body {
   color: var(--brown);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+/* "clip" corta o que vaza para os lados sem criar uma área de rolagem extra (comum no Safari do iPhone) */
+@supports (overflow-x: clip) {
+  html, body { overflow-x: clip; }
 }
 
 img { display: block; width: 100%; object-fit: cover; }
@@ -468,6 +476,7 @@ button { font: inherit; }
 .orc-steps p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
 
 .orc-card {
+  position: relative;
   background: var(--cream-light);
   color: var(--brown);
   border-radius: var(--radius);
@@ -602,7 +611,7 @@ select.input {
   margin-top: 14px; font-size: 0.8rem; color: var(--text-warm); text-align: center;
 }
 
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.hp { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip-path: inset(50%); pointer-events: none; }
 .orc-success { display: none; text-align: left; }
 .orc-card.sent form, .orc-card.sent .orc-card-head { display: none; }
 .orc-card.sent .orc-success { display: block; animation: fadeUp 0.8s var(--ease-out) both; }
