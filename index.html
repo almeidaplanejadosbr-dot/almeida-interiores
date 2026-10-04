@@ -1116,7 +1116,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 
       <form id="leadForm" novalidate>
         <!-- Campo anti-spam: invisível para pessoas, robôs costumam preenchê-lo -->
-        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-grid">
           <div class="field full">
             <label for="f-nome">Nome completo *</label>
@@ -1390,10 +1390,9 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 <script>
 (function () {
   var WA_NUMBER = '5511911501690';
-  // Cada solicitação do formulário é enviada por e-mail via FormSubmit (formsubmit.co).
-  // Depois de ativar o formulário, dá para trocar o e-mail pelo código aleatório
-  // que o FormSubmit envia, para não deixar o endereço visível no código do site.
-  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/almeidaplanejadosbr@gmail.com';
+  // Cada solicitação do formulário é enviada ao Formspree, que a encaminha por e-mail
+  // e guarda uma cópia no painel da conta (formspree.io).
+  var LEAD_ENDPOINT = 'https://formspree.io/f/xyezrabr';
 
   var navbar = document.getElementById('navbar');
   var floatWa = document.getElementById('floatWa');
@@ -1563,8 +1562,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       payload.append('Consentimento LGPD', 'Sim, aceitou a Política de Privacidade');
       payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome);
       payload.append('_replyto', data.email);
-      payload.append('_template', 'table');
-      payload.append('_honey', form._honey.value);
+      payload.append('_gotcha', form._gotcha.value);
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
@@ -1572,7 +1570,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
         keepalive: true
       }).then(function (res) {
         return res.json().then(function (j) {
-          if (!res.ok || String(j.success) !== 'true') throw new Error(j.message || 'falha');
+          if (!res.ok || j.ok !== true) throw new Error('falha no envio');
         });
       }).catch(function () { setSuccessState(false); });
     }
