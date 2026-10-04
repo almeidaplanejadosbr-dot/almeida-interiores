@@ -549,6 +549,7 @@ select.input {
   margin-top: 14px; font-size: 0.8rem; color: var(--text-warm); text-align: center;
 }
 
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .orc-success { display: none; text-align: left; }
 .orc-card.sent form, .orc-card.sent .orc-card-head { display: none; }
 .orc-card.sent .orc-success { display: block; animation: fadeUp 0.8s var(--ease-out) both; }
@@ -1114,6 +1115,8 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       </div>
 
       <form id="leadForm" novalidate>
+        <!-- Campo anti-spam: invisível para pessoas, robôs costumam preenchê-lo -->
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-grid">
           <div class="field full">
             <label for="f-nome">Nome completo *</label>
@@ -1191,14 +1194,15 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
             Enviar solicitação
             <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow"/></svg>
           </button>
-          <p class="form-note">Ao enviar, abriremos o WhatsApp com a sua mensagem pronta.</p>
+          <p class="form-note">Seus dados chegam direto à nossa equipe. Para agilizar, também abrimos o WhatsApp com a mensagem pronta.</p>
         </div>
       </form>
 
       <div class="orc-success" role="status" aria-live="polite">
         <div class="success-mark"><svg aria-hidden="true"><use href="#icon-check-lg"/></svg></div>
-        <h3>Solicitação pronta</h3>
-        <p>Abrimos o WhatsApp com os dados do seu imóvel. <strong>Confirme o envio da mensagem</strong> por lá para que ela chegue à nossa equipe.</p>
+        <h3 id="successTitle">Solicitação enviada</h3>
+        <p id="successOk">Recebemos os dados do seu imóvel e nossa equipe vai entrar em contato. Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.</p>
+        <p id="successFail" hidden>Não conseguimos registrar o envio automaticamente. <strong>Toque em “Abrir WhatsApp” e envie a mensagem</strong> para garantir o seu atendimento.</p>
         <p>Respondemos em até 2 horas no horário comercial.</p>
         <div class="success-actions">
           <a href="https://wa.me/5511911501690" target="_blank" rel="noopener" class="btn btn-dark" id="successWa">
@@ -1373,7 +1377,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
         <li><a href="https://www.instagram.com/almeida_interior/" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://wa.me/5511911501690" target="_blank" rel="noopener">WhatsApp</a></li>
       </ul>
-      <p>© 2026 Almeida Interiores. Todos os direitos reservados.</p>
+      <p>© 2026 Almeida Interiores · SGRG Arquitetura e Marcenaria Ltda · CNPJ 67.896.314/0001-95</p>
     </div>
   </div>
 </footer>
@@ -1386,9 +1390,10 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 <script>
 (function () {
   var WA_NUMBER = '5511911501690';
-  // Opcional: URL de um serviço de formulários (ex.: Formspree ou Google Apps Script)
-  // para também receber cada solicitação por e-mail/planilha. Vazio = só WhatsApp.
-  var LEAD_ENDPOINT = '';
+  // Cada solicitação do formulário é enviada por e-mail via FormSubmit (formsubmit.co).
+  // Depois de ativar o formulário, dá para trocar o e-mail pelo código aleatório
+  // que o FormSubmit envia, para não deixar o endereço visível no código do site.
+  var LEAD_ENDPOINT = 'https://formsubmit.co/ajax/almeidaplanejadosbr@gmail.com';
 
   var navbar = document.getElementById('navbar');
   var floatWa = document.getElementById('floatWa');
@@ -1545,12 +1550,31 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(data));
     document.getElementById('successWa').href = url;
 
+    setSuccessState(true);
     if (LEAD_ENDPOINT) {
+      var payload = new FormData();
+      payload.append('Nome', data.nome);
+      payload.append('Telefone', data.telefone);
+      payload.append('E-mail', data.email);
+      payload.append('Tipo de apartamento', data.tipo);
+      payload.append('Metragem', data.metragem + ' m²');
+      payload.append('Empreendimento/bairro', data.local || '—');
+      payload.append('Possui planta', data.planta);
+      payload.append('Consentimento LGPD', 'Sim, aceitou a Política de Privacidade');
+      payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome);
+      payload.append('_replyto', data.email);
+      payload.append('_template', 'table');
+      payload.append('_honey', form._honey.value);
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      }).catch(function () {});
+        body: payload,
+        keepalive: true
+      }).then(function (res) {
+        return res.json().then(function (j) {
+          if (!res.ok || String(j.success) !== 'true') throw new Error(j.message || 'falha');
+        });
+      }).catch(function () { setSuccessState(false); });
     }
 
     trackContactConversion();
@@ -1558,6 +1582,13 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     card.classList.add('sent');
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
+
+  // Se o registro por e-mail falhar, orienta o cliente a concluir pelo WhatsApp
+  function setSuccessState(ok) {
+    document.getElementById('successTitle').textContent = ok ? 'Solicitação enviada' : 'Falta só um passo';
+    document.getElementById('successOk').hidden = !ok;
+    document.getElementById('successFail').hidden = ok;
+  }
 
   document.getElementById('leadReset').addEventListener('click', function () {
     form.reset();
