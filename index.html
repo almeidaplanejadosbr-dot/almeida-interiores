@@ -569,6 +569,9 @@ select.input {
 .choice input:focus-visible + label { box-shadow: 0 0 0 3px rgba(200,132,26,0.25); }
 .choice input:disabled { cursor: not-allowed; }
 .choice input:disabled + label { opacity: 0.4; cursor: not-allowed; }
+/* Mesmo sem JavaScript: com "Apartamento completo" marcado, os avulsos ficam travados */
+.choice-group--multi:has(#f-amb-completo:checked) .choice:not(:first-child) input { pointer-events: none; }
+.choice-group--multi:has(#f-amb-completo:checked) .choice:not(:first-child) label { opacity: 0.4; }
 
 .field-hint { font-size: 0.82rem; color: var(--text-warm); line-height: 1.5; }
 .field-error {
@@ -1103,7 +1106,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
           <div class="field full" id="field-local">
             <label for="f-local">Nome do empreendimento ou bairro <span class="opt">(opcional)</span></label>
             <input class="input" type="text" id="f-local" name="local" maxlength="140" placeholder="Ex.: Residencial Vila Nova, Pinheiros" aria-describedby="h-local">
-            <span class="field-hint" id="h-local">Com o nome do empreendimento, buscamos a planta direto na construtora.</span>
+            <span class="field-hint" id="h-local" hidden></span>
           </div>
         </div>
 
@@ -1360,7 +1363,6 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   var phone = document.getElementById('f-telefone');
   var localField = document.getElementById('field-local');
   var localHint = document.getElementById('h-local');
-  var LOCAL_HINT = localHint.textContent;
   var LOCAL_HINT_SEM_PLANTA = 'Sem problema! Nos diga o nome do empreendimento que buscamos a planta para você.';
 
   function formatPhone(v) {
@@ -1436,7 +1438,8 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       var semPlanta = r.value === 'Não';
       document.getElementById('h-planta').hidden = semPlanta;
       localField.classList.toggle('highlight', semPlanta);
-      localHint.textContent = semPlanta ? LOCAL_HINT_SEM_PLANTA : LOCAL_HINT;
+      localHint.textContent = semPlanta ? LOCAL_HINT_SEM_PLANTA : '';
+      localHint.hidden = !semPlanta;
       check('planta');
     });
   });
@@ -1525,7 +1528,8 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     syncAmbientes();
     document.getElementById('h-planta').hidden = true;
     localField.classList.remove('highlight');
-    localHint.textContent = LOCAL_HINT;
+    localHint.textContent = '';
+    localHint.hidden = true;
     form.querySelectorAll('.invalid').forEach(function (f) { f.classList.remove('invalid'); });
     card.classList.remove('sent');
     completo.focus();
