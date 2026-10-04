@@ -567,6 +567,8 @@ select.input {
 .choice input:checked + label { border-color: var(--gold); background: var(--icon-bg); }
 .choice input:checked + label::before { border-color: var(--gold); box-shadow: inset 0 0 0 4px var(--white), inset 0 0 0 8px var(--gold); }
 .choice input:focus-visible + label { box-shadow: 0 0 0 3px rgba(200,132,26,0.25); }
+.choice input:disabled { cursor: not-allowed; }
+.choice input:disabled + label { opacity: 0.4; cursor: not-allowed; }
 
 .field-hint { font-size: 0.82rem; color: var(--text-warm); line-height: 1.5; }
 .field-error {
@@ -1055,7 +1057,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
         <div class="form-grid">
           <fieldset class="field full" aria-describedby="e-ambientes">
             <legend class="field-label">O que você precisa? *</legend>
-            <span class="field-hint">Marque uma ou mais opções.</span>
+            <span class="field-hint" id="h-ambientes">Marque uma ou mais opções.</span>
             <div class="choice-group choice-group--multi">
               <div class="choice check"><input type="checkbox" id="f-amb-completo" name="ambientes" value="Apartamento completo"><label for="f-amb-completo">Apartamento completo</label></div>
               <div class="choice check"><input type="checkbox" id="f-amb-cozinha" name="ambientes" value="Cozinha"><label for="f-amb-cozinha">Cozinha</label></div>
@@ -1407,19 +1409,21 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     });
   });
 
-  // "Apartamento completo" exclui os ambientes avulsos, e vice-versa
+  // "Apartamento completo" já inclui todos os ambientes: desmarca e trava os avulsos
   var completo = document.getElementById('f-amb-completo');
-  form.querySelectorAll('input[name="ambientes"]').forEach(function (box) {
-    box.addEventListener('change', function () {
-      if (box.checked) {
-        if (box === completo) {
-          form.querySelectorAll('input[name="ambientes"]').forEach(function (o) { if (o !== completo) o.checked = false; });
-        } else {
-          completo.checked = false;
-        }
-      }
-      check('ambientes');
+  var avulsos = Array.prototype.slice.call(form.querySelectorAll('input[name="ambientes"]'))
+    .filter(function (o) { return o !== completo; });
+  var ambHint = document.getElementById('h-ambientes');
+  var AMB_HINT = ambHint.textContent;
+  function syncAmbientes() {
+    avulsos.forEach(function (o) {
+      if (completo.checked) o.checked = false;
+      o.disabled = completo.checked;
     });
+    ambHint.textContent = completo.checked ? 'O apartamento completo já inclui todos os ambientes.' : AMB_HINT;
+  }
+  form.querySelectorAll('input[name="ambientes"]').forEach(function (box) {
+    box.addEventListener('change', function () { syncAmbientes(); check('ambientes'); });
   });
 
   form.querySelectorAll('input[name="chaves"]').forEach(function (r) {
@@ -1518,6 +1522,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 
   document.getElementById('leadReset').addEventListener('click', function () {
     form.reset();
+    syncAmbientes();
     document.getElementById('h-planta').hidden = true;
     localField.classList.remove('highlight');
     localHint.textContent = LOCAL_HINT;
