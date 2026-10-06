@@ -67,11 +67,18 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-18311745949');
+  gtag('config', 'G-Q3BWLBRKN0');
 
-  // Conversão "Contato": disparada quando o visitante envia o formulário
-  // de orçamento ou clica em um link de WhatsApp (ver script no fim da página).
-  function trackContactConversion() {
+  // Contato: disparado quando o visitante envia o formulário de orçamento
+  // ou clica em um link de WhatsApp (ver script no fim da página).
+  // Registra a conversão no Google Ads e o evento correspondente no Google Analytics.
+  function trackContactConversion(origem) {
     gtag('event', 'conversion', {'send_to': 'AW-18311745949/_nAeCK_Ui4UdEJ2j3JtE'});
+    if (origem === 'formulario') {
+      gtag('event', 'generate_lead', {'send_to': 'G-Q3BWLBRKN0', 'lead_source': 'formulario_orcamento'});
+    } else {
+      gtag('event', 'whatsapp_click', {'send_to': 'G-Q3BWLBRKN0'});
+    }
   }
 </script>
 
@@ -1363,7 +1370,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 
   /* Conversão em cliques de WhatsApp */
   document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (a) {
-    a.addEventListener('click', function () { trackContactConversion(); });
+    a.addEventListener('click', function () { trackContactConversion('whatsapp'); });
   });
 
   /* ---------------- Formulário de orçamento ---------------- */
@@ -1519,7 +1526,7 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       }).catch(function () { setSuccessState(false); });
     }
 
-    trackContactConversion();
+    trackContactConversion('formulario');
     window.open(url, '_blank', 'noopener');
     card.classList.add('sent');
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
