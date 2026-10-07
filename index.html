@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google Tag Manager: as tags do Google Ads e do GA4 são disparadas pelo GTM.
+     O site não chama gtag(); ele só envia eventos ao dataLayer. -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KT5MBQVM');</script>
+<!-- End Google Tag Manager -->
 <title>Studios e Apartamentos Planejados em SP | Almeida Interiores</title>
 <meta name="description" content="Projeto, marcenaria planejada e execução completa para studios, apartamentos e ambientes em São Paulo e região metropolitana. Do projeto 3D à entrega. Solicite seu orçamento.">
 <meta name="theme-color" content="#2A1508">
@@ -60,16 +68,6 @@
 }
 </script>
 
-<!-- Google tag (gtag.js): instalação única. Nenhuma conversão é disparada aqui;
-     os eventos de conversão ficam no script do fim da página (formulário e WhatsApp). -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3BWLBRKN0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Q3BWLBRKN0');
-  gtag('config', 'AW-18311745949');
-</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -874,6 +872,10 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KT5MBQVM"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- SVG ICONS DEFS (reutilizáveis) -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -1365,49 +1367,44 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll(revealSel).forEach(function (el) { revealObserver.observe(el); });
 
-  /* ---------------- Rastreamento (Google Ads + GA4) ----------------
-     Regras: nenhuma conversão em carregamento, rolagem ou visualização.
-     - Formulário: conversão + generate_lead SÓ depois que o Formspree confirma.
-     - WhatsApp: conversão + whatsapp_click SÓ em clique real (event.isTrusted).
-     - Depois de um lead confirmado nesta visita, cliques no WhatsApp registram
-       apenas whatsapp_click (sem nova conversão no Google Ads). */
-  var ADS_CONTATO = 'AW-18311745949/_nAeCK_Ui4UdEJ2j3JtE';
-  var GA4_ID = 'G-Q3BWLBRKN0';
+  /* ---------------- Rastreamento (via Google Tag Manager) ----------------
+     O site NÃO chama gtag. Ele só envia eventos ao dataLayer e o GTM
+     (GTM-KT5MBQVM) dispara as tags do Google Ads e do GA4:
+       - lead_confirmado      → formulário confirmado pelo Formspree
+       - whatsapp_contato     → clique real em WhatsApp que conta como conversão
+       - whatsapp_click_extra → clique em WhatsApp de quem já virou lead na visita
+                                (só GA4, sem conversão no Google Ads)
+     Nada é enviado em carregamento, rolagem ou visualização de elementos. */
   var tracking = { leadConverted: false };
+  window.dataLayer = window.dataLayer || [];
 
-  function gtagSafe() {
-    if (typeof window.gtag === 'function') window.gtag.apply(window, arguments);
-  }
+  function dlPush(obj) { window.dataLayer.push(obj); }
   function newId(prefix) {
     return prefix + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
   }
-  function fireAdsContato(transactionId) {
-    gtagSafe('event', 'conversion', {
-      send_to: ADS_CONTATO,
-      transaction_id: transactionId, // o Google Ads deduplica por este ID
-      transport_type: 'beacon'
-    });
-  }
 
   // Um único listener para todos os links de WhatsApp da página (inclusive os
-  // que forem criados depois). window.open() não gera evento de clique, então a
-  // abertura automática após o formulário não passa por aqui.
+  // que forem criados depois), só para cliques reais. window.open() não gera
+  // evento de clique, então a abertura automática após o formulário não passa aqui.
+  var WA_PATTERN = /^(https?:\/\/(wa\.me|api\.whatsapp\.com|web\.whatsapp\.com)\/|whatsapp:)/i;
   document.addEventListener('click', function (event) {
     if (!event.isTrusted) return;
     var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
-    if (!link || !/^https:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(link.getAttribute('href') || '')) return;
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (!WA_PATTERN.test(href)) return;
 
     var where = link.getAttribute('data-wa-location') ||
       (link.closest('header') ? 'header' :
         link.closest('footer') ? 'footer' :
           link.classList.contains('float-wa') ? 'botao_flutuante' : 'pagina');
 
-    gtagSafe('event', 'whatsapp_click', {
-      send_to: GA4_ID,
-      link_location: where,
-      transport_type: 'beacon'
+    dlPush({
+      event: tracking.leadConverted ? 'whatsapp_click_extra' : 'whatsapp_contato',
+      transaction_id: newId('wa'),
+      link_url: href,
+      link_location: where
     });
-    if (!tracking.leadConverted) fireAdsContato(newId('wa'));
   }, true);
 
   /* ---------------- Formulário de orçamento ---------------- */
@@ -1601,14 +1598,11 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     setSending(true);
     sendToFormspree(data).then(function () {
       // Sucesso confirmado pelo Formspree: só agora registra a conversão.
-      var leadId = newId('lead');
       tracking.leadConverted = true;
-      fireAdsContato(leadId);
-      gtagSafe('event', 'generate_lead', {
-        send_to: GA4_ID,
-        form_name: 'solicitar_orcamento',
-        lead_source: 'formulario_orcamento',
-        transaction_id: leadId
+      dlPush({
+        event: 'lead_confirmado',
+        transaction_id: newId('lead'), // o Google Ads deduplica por este ID
+        form_name: 'solicitar_orcamento'
       });
 
       setSending(false);
