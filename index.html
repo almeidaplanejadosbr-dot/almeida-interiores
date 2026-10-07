@@ -60,26 +60,15 @@
 }
 </script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18311745949"></script>
+<!-- Google tag (gtag.js): instalação única. Nenhuma conversão é disparada aqui;
+     os eventos de conversão ficam no script do fim da página (formulário e WhatsApp). -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3BWLBRKN0"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'AW-18311745949');
   gtag('config', 'G-Q3BWLBRKN0');
-
-  // Contato: disparado quando o visitante envia o formulário de orçamento
-  // ou clica em um link de WhatsApp (ver script no fim da página).
-  // Registra a conversão no Google Ads e o evento correspondente no Google Analytics.
-  function trackContactConversion(origem) {
-    gtag('event', 'conversion', {'send_to': 'AW-18311745949/_nAeCK_Ui4UdEJ2j3JtE'});
-    if (origem === 'formulario') {
-      gtag('event', 'generate_lead', {'send_to': 'G-Q3BWLBRKN0', 'lead_source': 'formulario_orcamento'});
-    } else {
-      gtag('event', 'whatsapp_click', {'send_to': 'G-Q3BWLBRKN0'});
-    }
-  }
+  gtag('config', 'AW-18311745949');
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -614,6 +603,14 @@ select.input {
 .form-actions { margin-top: 32px; }
 .form-actions .btn { width: 100%; padding: 17px 24px; }
 .form-actions .btn[disabled] { opacity: 0.7; cursor: progress; transform: none; }
+.form-actions .btn[aria-busy="true"] svg { display: none; }
+.form-status {
+  margin-top: 14px; padding: 12px 14px;
+  border: 1px solid var(--error); border-radius: var(--radius);
+  background: rgba(163,48,28,0.06);
+  font-size: 0.88rem; line-height: 1.55; color: var(--error);
+}
+.form-status a { color: var(--error); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .form-note {
   margin-top: 14px; font-size: 0.8rem; color: var(--text-warm); text-align: center;
 }
@@ -1149,9 +1146,10 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
 
         <div class="form-actions">
           <button type="submit" class="btn btn-gold" id="leadSubmit">
-            Enviar solicitação
+            <span class="btn-label">Enviar solicitação</span>
             <svg width="16" height="16" aria-hidden="true"><use href="#icon-arrow"/></svg>
           </button>
+          <p class="form-status" id="leadStatus" role="alert" hidden></p>
           <p class="form-note">Ao enviar, você concorda com a nossa <a href="politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>. Seus dados chegam direto à nossa equipe e abrimos o WhatsApp para agilizar o contato.</p>
         </div>
       </form>
@@ -1159,13 +1157,12 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       <div class="orc-success" role="status" aria-live="polite">
         <div class="success-mark"><svg aria-hidden="true"><use href="#icon-check-lg"/></svg></div>
         <h3 id="successTitle">Solicitação enviada</h3>
-        <p id="successOk">Recebemos os dados do seu imóvel e nossa equipe vai entrar em contato. Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.</p>
-        <p id="successFail" hidden>Não conseguimos registrar o envio automaticamente. <strong>Toque em “Abrir WhatsApp” e envie a mensagem</strong> para garantir o seu atendimento.</p>
+        <p>Recebemos os dados do seu imóvel e nossa equipe vai entrar em contato. <span id="successWaMsg">Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.</span></p>
         <p>Respondemos em até 2 horas no horário comercial.</p>
         <div class="success-actions">
-          <a href="https://wa.me/5511911501690" target="_blank" rel="noopener" class="btn btn-dark" id="successWa">
+          <a href="https://wa.me/5511911501690" target="_blank" rel="noopener" class="btn btn-dark" id="successWa" data-wa-location="pos_formulario">
             <svg width="15" height="15" aria-hidden="true"><use href="#icon-wa"/></svg>
-            Abrir WhatsApp novamente
+            <span id="successWaLabel">Abrir WhatsApp novamente</span>
           </a>
           <button type="button" class="btn-text" id="leadReset">Nova solicitação</button>
         </div>
@@ -1368,10 +1365,50 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
   }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll(revealSel).forEach(function (el) { revealObserver.observe(el); });
 
-  /* Conversão em cliques de WhatsApp */
-  document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (a) {
-    a.addEventListener('click', function () { trackContactConversion('whatsapp'); });
-  });
+  /* ---------------- Rastreamento (Google Ads + GA4) ----------------
+     Regras: nenhuma conversão em carregamento, rolagem ou visualização.
+     - Formulário: conversão + generate_lead SÓ depois que o Formspree confirma.
+     - WhatsApp: conversão + whatsapp_click SÓ em clique real (event.isTrusted).
+     - Depois de um lead confirmado nesta visita, cliques no WhatsApp registram
+       apenas whatsapp_click (sem nova conversão no Google Ads). */
+  var ADS_CONTATO = 'AW-18311745949/_nAeCK_Ui4UdEJ2j3JtE';
+  var GA4_ID = 'G-Q3BWLBRKN0';
+  var tracking = { leadConverted: false };
+
+  function gtagSafe() {
+    if (typeof window.gtag === 'function') window.gtag.apply(window, arguments);
+  }
+  function newId(prefix) {
+    return prefix + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  }
+  function fireAdsContato(transactionId) {
+    gtagSafe('event', 'conversion', {
+      send_to: ADS_CONTATO,
+      transaction_id: transactionId, // o Google Ads deduplica por este ID
+      transport_type: 'beacon'
+    });
+  }
+
+  // Um único listener para todos os links de WhatsApp da página (inclusive os
+  // que forem criados depois). window.open() não gera evento de clique, então a
+  // abertura automática após o formulário não passa por aqui.
+  document.addEventListener('click', function (event) {
+    if (!event.isTrusted) return;
+    var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+    if (!link || !/^https:\/\/(wa\.me|api\.whatsapp\.com)\//i.test(link.getAttribute('href') || '')) return;
+
+    var where = link.getAttribute('data-wa-location') ||
+      (link.closest('header') ? 'header' :
+        link.closest('footer') ? 'footer' :
+          link.classList.contains('float-wa') ? 'botao_flutuante' : 'pagina');
+
+    gtagSafe('event', 'whatsapp_click', {
+      send_to: GA4_ID,
+      link_location: where,
+      transport_type: 'beacon'
+    });
+    if (!tracking.leadConverted) fireAdsContato(newId('wa'));
+  }, true);
 
   /* ---------------- Formulário de orçamento ---------------- */
   var form = document.getElementById('leadForm');
@@ -1478,8 +1515,71 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     return lines.join('\n');
   }
 
+  var submitBtn = document.getElementById('leadSubmit');
+  var submitLabel = submitBtn.querySelector('.btn-label');
+  var SUBMIT_TEXT = submitLabel.textContent;
+  var statusBox = document.getElementById('leadStatus');
+  var sending = false;
+  var SEND_TIMEOUT_MS = 15000;
+  var ERROR_HTML = 'Não foi possível enviar agora. Verifique sua conexão e tente novamente, ou ' +
+    '<a href="https://wa.me/' + WA_NUMBER + '" target="_blank" rel="noopener">fale conosco pelo WhatsApp</a>.';
+
+  function setSending(on) {
+    sending = on;
+    submitBtn.disabled = on;
+    submitBtn.setAttribute('aria-busy', on ? 'true' : 'false');
+    submitLabel.textContent = on ? 'Enviando solicitação…' : SUBMIT_TEXT;
+  }
+  function showError() {
+    statusBox.innerHTML = ERROR_HTML; // texto fixo, sem dados do visitante
+    statusBox.hidden = false;
+  }
+  function clearError() {
+    statusBox.textContent = '';
+    statusBox.hidden = true;
+  }
+
+  function sendToFormspree(data) {
+    var payload = new FormData();
+    payload.append('Nome', data.nome);
+    payload.append('Telefone', data.telefone);
+    payload.append('E-mail', data.email || '—');
+    payload.append('Precisa de', data.ambientes);
+    payload.append('Metragem do imóvel', data.metragem + ' m²');
+    payload.append('Chaves', data.chaves);
+    payload.append('Possui planta', data.planta);
+    payload.append('Empreendimento/bairro', data.local || '—');
+    payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome + ' (' + data.ambientes + ')');
+    if (data.email) payload.append('_replyto', data.email);
+    payload.append('_gotcha', form._gotcha.value);
+
+    var controller = ('AbortController' in window) ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, SEND_TIMEOUT_MS) : null;
+
+    return fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: payload,
+      signal: controller ? controller.signal : undefined
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (j) {
+        if (timer) clearTimeout(timer);
+        if (!res.ok || j.ok !== true) {
+          var detail = j && j.errors && j.errors[0] && j.errors[0].message;
+          throw new Error('Formspree recusou o envio' + (detail ? ': ' + detail : ' (HTTP ' + res.status + ')'));
+        }
+      });
+    }, function (err) {
+      if (timer) clearTimeout(timer);
+      throw err;
+    });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (sending) return; // impede envio duplo (clique duplo, Enter repetido)
+    clearError();
+
     var firstInvalid = null;
     Object.keys(fieldOf).forEach(function (name) {
       if (!check(name) && !firstInvalid) firstInvalid = document.getElementById(fieldOf[name]);
@@ -1496,48 +1596,42 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
       planta: checked('planta')[0],
       local: form.local.value.trim()
     };
-
     var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(data));
-    document.getElementById('successWa').href = url;
 
-    setSuccessState(true);
-    if (LEAD_ENDPOINT) {
-      var payload = new FormData();
-      payload.append('Nome', data.nome);
-      payload.append('Telefone', data.telefone);
-      payload.append('E-mail', data.email || '—');
-      payload.append('Precisa de', data.ambientes);
-      payload.append('Metragem do imóvel', data.metragem + ' m²');
-      payload.append('Chaves', data.chaves);
-      payload.append('Possui planta', data.planta);
-      payload.append('Empreendimento/bairro', data.local || '—');
-      payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome + ' (' + data.ambientes + ')');
-      if (data.email) payload.append('_replyto', data.email);
-      payload.append('_gotcha', form._gotcha.value);
-      fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: payload,
-        keepalive: true
-      }).then(function (res) {
-        return res.json().then(function (j) {
-          if (!res.ok || j.ok !== true) throw new Error('falha no envio');
-        });
-      }).catch(function () { setSuccessState(false); });
-    }
+    setSending(true);
+    sendToFormspree(data).then(function () {
+      // Sucesso confirmado pelo Formspree: só agora registra a conversão.
+      var leadId = newId('lead');
+      tracking.leadConverted = true;
+      fireAdsContato(leadId);
+      gtagSafe('event', 'generate_lead', {
+        send_to: GA4_ID,
+        form_name: 'solicitar_orcamento',
+        lead_source: 'formulario_orcamento',
+        transaction_id: leadId
+      });
 
-    trackContactConversion('formulario');
-    window.open(url, '_blank', 'noopener');
-    card.classList.add('sent');
-    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setSending(false);
+      document.getElementById('successWa').href = url;
+      card.classList.add('sent');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Abre o WhatsApp com a mensagem pronta. Abertura por script não gera
+      // evento de clique, logo não conta uma 2ª conversão. Se o navegador
+      // bloquear, o visitante usa o botão do bloco de sucesso.
+      var win = window.open(url, '_blank');
+      if (win) win.opener = null;
+      document.getElementById('successWaMsg').textContent = win
+        ? 'Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.'
+        : 'Se quiser agilizar, toque em “Abrir WhatsApp” para enviar a mensagem pronta.';
+      document.getElementById('successWaLabel').textContent = win ? 'Abrir WhatsApp novamente' : 'Abrir WhatsApp';
+    }).catch(function (err) {
+      // Falha, recusa ou tempo esgotado: NENHUMA conversão.
+      if (window.console) console.warn('[orçamento] envio não confirmado:', err && err.message);
+      setSending(false);
+      showError();
+    });
   });
-
-  // Se o registro por e-mail falhar, orienta o cliente a concluir pelo WhatsApp
-  function setSuccessState(ok) {
-    document.getElementById('successTitle').textContent = ok ? 'Solicitação enviada' : 'Falta só um passo';
-    document.getElementById('successOk').hidden = !ok;
-    document.getElementById('successFail').hidden = ok;
-  }
 
   document.getElementById('leadReset').addEventListener('click', function () {
     form.reset();
@@ -1547,6 +1641,8 @@ footer p { color:rgba(245,237,216,0.32); font-size:0.78rem; }
     localHint.textContent = '';
     localHint.hidden = true;
     form.querySelectorAll('.invalid').forEach(function (f) { f.classList.remove('invalid'); });
+    clearError();
+    tracking.leadConverted = false; // um novo envio confirmado pode gerar nova conversão
     card.classList.remove('sent');
     completo.focus();
   });
