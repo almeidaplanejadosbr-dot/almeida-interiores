@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://almeidainteriores.com.br/sitemap.xml
+Sitemap: https://www.almeidainteriores.com.br/sitemap.xml
