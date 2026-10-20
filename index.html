@@ -33,7 +33,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
+  "@graph": [
+  {
+    "@type": "WebSite",
+    "@id": "https://www.almeidainteriores.com.br/#website",
+    "name": "Almeida Interiores",
+    "url": "https://www.almeidainteriores.com.br/",
+    "inLanguage": "pt-BR",
+    "publisher": { "@id": "https://www.almeidainteriores.com.br/#empresa" }
+  },
+  {
+    "@type": "WebPage",
+    "@id": "https://www.almeidainteriores.com.br/#pagina",
+    "url": "https://www.almeidainteriores.com.br/",
+    "name": "Studios e Apartamentos Planejados em SP | Almeida Interiores",
+    "inLanguage": "pt-BR",
+    "isPartOf": { "@id": "https://www.almeidainteriores.com.br/#website" },
+    "about": { "@id": "https://www.almeidainteriores.com.br/#empresa" },
+    "primaryImageOfPage": "https://www.almeidainteriores.com.br/assets/og-almeida.jpg"
+  },
+  {
+  "@type": ["Organization", "HomeAndConstructionBusiness"],
   "@id": "https://www.almeidainteriores.com.br/#empresa",
   "name": "Almeida Interiores",
   "legalName": "SGRG Arquitetura e Marcenaria Ltda",
@@ -64,6 +84,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   ],
   "sameAs": [
     "https://www.instagram.com/almeida_interior/"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ]
+  }
   ]
 }
 </script>
@@ -662,7 +698,7 @@ select.input {
 
 .comp-items { list-style:none; border-top:1px solid rgba(59,31,14,0.14); }
 .comp-item { padding: 28px 0; border-bottom:1px solid rgba(59,31,14,0.14); }
-.comp-text h4 {
+.comp-text h3 {
   font-family:'Montserrat',sans-serif; font-weight:800;
   font-size:0.85rem; letter-spacing:0.07em; text-transform:uppercase;
   color:var(--brown-dark); margin-bottom:6px;
@@ -688,7 +724,7 @@ select.input {
   border-bottom: 1px solid rgba(59,31,14,0.14);
 }
 .dif-item { padding: 30px 0; border-top: 1px solid rgba(59,31,14,0.14); }
-.dif-item h4 {
+.dif-item h3 {
   font-family:'Montserrat',sans-serif; font-weight:800;
   font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase;
   color:var(--brown-dark); margin-bottom:8px;
@@ -1193,19 +1229,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <ul class="comp-items">
           <li class="comp-item">
             <div class="comp-text">
-              <h4>Transparência</h4>
+              <h3>Transparência</h3>
               <p>Orçamento detalhado, sem surpresas. Você sabe exatamente o que está pagando antes de assinar qualquer contrato.</p>
             </div>
           </li>
           <li class="comp-item">
             <div class="comp-text">
-              <h4>Prazo é Sagrado</h4>
+              <h3>Prazo é Sagrado</h3>
               <p>Cumprimos os prazos combinados com rigor. Sabemos que sua vida não para enquanto reformamos.</p>
             </div>
           </li>
           <li class="comp-item">
             <div class="comp-text">
-              <h4>Segurança</h4>
+              <h3>Segurança</h3>
               <p>Do projeto ao pós-venda: seu lar protegido com seguro de execução e garantia de 5 anos.</p>
             </div>
           </li>
@@ -1224,27 +1260,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </h2>
     <ul class="dif-list">
       <li class="dif-item reveal">
-        <h4>Acompanhamento Técnico</h4>
+        <h3>Acompanhamento Técnico</h3>
         <p>Responsável técnico presente em todas as etapas da obra, do início ao acabamento final.</p>
       </li>
       <li class="dif-item reveal">
-        <h4>Detalhamento Executivo</h4>
+        <h3>Detalhamento Executivo</h3>
         <p>Documentação completa do projeto com memória descritiva e plantas técnicas.</p>
       </li>
       <li class="dif-item reveal">
-        <h4>Pagamento Facilitado</h4>
+        <h3>Pagamento Facilitado</h3>
         <p>Parcelamento em até 10x, consulte juros. Condições especiais para pagamento à vista.</p>
       </li>
       <li class="dif-item reveal">
-        <h4>Garantia Total</h4>
+        <h3>Garantia Total</h3>
         <p>Garantia completa de instalação e material. Nós compramos, instalamos e garantimos.</p>
       </li>
       <li class="dif-item reveal">
-        <h4>Projeto 3D</h4>
+        <h3>Projeto 3D</h3>
         <p>Visualize seu apartamento planejado antes do início da obra com renderização realista.</p>
       </li>
       <li class="dif-item reveal">
-        <h4>RRT Arquitetura</h4>
+        <h3>RRT Arquitetura</h3>
         <p>Responsabilidade técnica de arquitetura incluída em todos os projetos.</p>
       </li>
     </ul>
@@ -1293,6 +1329,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li><a href="/apartamento-pequeno-planejado/">Apartamento pequeno planejado</a></li>
         <li><a href="/studio-planejado/">Studio planejado</a></li>
         <li><a href="/marcenaria-planejada-sp/">Marcenaria planejada</a></li>
+        <li><a href="/sobre/">Sobre a Almeida</a></li>
+        <li><a href="/contato/">Contato</a></li>
         <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
         <li><a href="https://www.instagram.com/almeida_interior/" target="_blank" rel="noopener">Instagram</a></li>
         <li><a href="https://wa.me/5511911501690" target="_blank" rel="noopener">WhatsApp</a></li>
