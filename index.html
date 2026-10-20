@@ -1084,18 +1084,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <ol class="orc-steps reveal">
         <li>
           <span class="step-n">01</span>
-          <h3>Você envia os dados</h3>
-          <p>Leva menos de um minuto. Nenhuma informação é publicada.</p>
+          <h3>Você envia os dados e a planta</h3>
+          <p>Ambientes, metragem e a planta do imóvel. Leva menos de um minuto e nenhuma informação é publicada.</p>
         </li>
         <li>
           <span class="step-n">02</span>
-          <h3>Análise do espaço</h3>
-          <p>Avaliamos a metragem e a planta para indicar o melhor caminho.</p>
+          <h3>Projeto executivo</h3>
+          <p>Já tem o projeto executivo? Usamos o seu, inclusive o do seu arquiteto. Não tem? Desenvolvemos para você, em um orçamento à parte.</p>
         </li>
         <li>
           <span class="step-n">03</span>
-          <h3>Proposta personalizada</h3>
-          <p>Retornamos pelo WhatsApp ou e-mail com os próximos passos.</p>
+          <h3>Orçamento da marcenaria</h3>
+          <p>Com o projeto executivo em mãos, enviamos a proposta detalhada da marcenaria pelo WhatsApp ou e-mail.</p>
         </li>
       </ol>
     </div>
@@ -1155,6 +1155,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <span class="field-hint" id="h-planta" hidden>Depois do envio, você pode mandar a planta pelo WhatsApp (foto ou PDF).</span>
             <span class="field-error" id="e-planta">Indique se possui a planta.</span>
+          </fieldset>
+
+          <fieldset class="field full" aria-describedby="e-executivo">
+            <legend class="field-label">Possui projeto executivo de marcenaria? *</legend>
+            <span class="field-hint" id="h-executivo-base">É o detalhamento técnico de cada móvel: medidas, materiais e ferragens.</span>
+            <div class="choice-group choice-group--stack">
+              <div class="choice"><input type="radio" id="f-exec-sim" name="executivo" value="Sim, já tenho"><label for="f-exec-sim">Sim, já tenho (meu ou do meu arquiteto)</label></div>
+              <div class="choice"><input type="radio" id="f-exec-nao" name="executivo" value="Não, quero que a Almeida desenvolva"><label for="f-exec-nao">Não, quero que a Almeida desenvolva</label></div>
+              <div class="choice"><input type="radio" id="f-exec-naosei" name="executivo" value="Não sei"><label for="f-exec-naosei">Não sei</label></div>
+            </div>
+            <span class="field-hint" id="h-executivo" hidden></span>
+            <span class="field-error" id="e-executivo">Indique se possui o projeto executivo.</span>
           </fieldset>
 
           <div class="field full" id="field-local">
@@ -1478,15 +1490,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     metragem: function () { var m = parseFloat(String(form.metragem.value).replace(',', '.')); return m >= 10 && m <= 2000; },
     chaves: function () { return checked('chaves').length === 1; },
     planta: function () { return checked('planta').length === 1; },
+    executivo: function () { return checked('executivo').length === 1; },
     nome: function () { return form.nome.value.trim().length >= 3; },
     telefone: function () { var n = form.telefone.value.replace(/\D/g, '').length; return n === 10 || n === 11; },
     email: function () { var v = form.email.value.trim(); return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
   };
   var fieldOf = {
     ambientes: 'f-amb-completo', metragem: 'f-metragem', chaves: 'f-chaves-1', planta: 'f-planta-sim',
+    executivo: 'f-exec-sim',
     nome: 'f-nome', telefone: 'f-telefone', email: 'f-email'
   };
-  var groups = { ambientes: true, chaves: true, planta: true };
+  var groups = { ambientes: true, chaves: true, planta: true, executivo: true };
 
   function check(name) {
     var ok = validators[name]();
@@ -1538,6 +1552,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
+  // Projeto executivo: explica o próximo passo conforme a resposta
+  var execHint = document.getElementById('h-executivo');
+  var EXEC_HINTS = {
+    'Sim, já tenho': 'Ótimo! Depois do envio, mande o projeto executivo pelo WhatsApp (PDF) para orçarmos a marcenaria.',
+    'Não, quero que a Almeida desenvolva': 'Sem problema: desenvolvemos o projeto executivo para você. Ele é orçado à parte, antes da marcenaria.',
+    'Não sei': 'Tudo bem! No primeiro contato explicamos o que é e indicamos o melhor caminho para o seu imóvel.'
+  };
+  form.querySelectorAll('input[name="executivo"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      execHint.textContent = EXEC_HINTS[r.value] || '';
+      execHint.hidden = !execHint.textContent;
+      check('executivo');
+    });
+  });
+
   function buildMessage(d) {
     var lines = [
       'Olá! Gostaria de solicitar um orçamento.',
@@ -1550,7 +1579,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       'Precisa de: ' + d.ambientes,
       'Metragem do imóvel: ' + d.metragem + ' m²',
       'Chaves: ' + d.chaves,
-      'Possui planta: ' + d.planta
+      'Possui planta: ' + d.planta,
+      'Projeto executivo: ' + d.executivo
     );
     if (d.local) lines.push('Empreendimento/bairro: ' + d.local);
     return lines.join('\n');
@@ -1589,6 +1619,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     payload.append('Metragem do imóvel', data.metragem + ' m²');
     payload.append('Chaves', data.chaves);
     payload.append('Possui planta', data.planta);
+    payload.append('Projeto executivo', data.executivo);
     payload.append('Empreendimento/bairro', data.local || '—');
     payload.append('_subject', 'Novo pedido de orçamento: ' + data.nome + ' (' + data.ambientes + ')');
     if (data.email) payload.append('_replyto', data.email);
@@ -1635,6 +1666,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       metragem: String(form.metragem.value).replace('.', ','),
       chaves: checked('chaves')[0],
       planta: checked('planta')[0],
+      executivo: checked('executivo')[0],
       local: form.local.value.trim()
     };
     var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(data));
@@ -1675,6 +1707,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     form.reset();
     syncAmbientes();
     document.getElementById('h-planta').hidden = true;
+    execHint.textContent = '';
+    execHint.hidden = true;
     localField.classList.remove('highlight');
     localHint.textContent = '';
     localHint.hidden = true;
