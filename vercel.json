@@ -44,6 +44,15 @@
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io https://www.google.com https://www.googleadservices.com https://*.doubleclick.net https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com https://*.doubleclick.net; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self' https://formspree.io"
         }
       ]
+    },
+    {
+      "source": "/social/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "trailingSlash": true
