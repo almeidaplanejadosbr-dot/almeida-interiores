@@ -718,7 +718,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var where = link.getAttribute('data-wa-location') ||
       (link.closest('footer') ? 'footer' : link.classList.contains('float-wa') ? 'botao_flutuante' : 'pagina');
     window.dataLayer.push({
-      event: 'whatsapp_contato',
+      // Depois de um lead confirmado nesta visita, o clique no WhatsApp vai só para o GA4
+      // (whatsapp_click_extra), sem gerar uma 2ª conversão no Google Ads — igual à home.
+      event: window.__almeidaLeadConverted ? 'whatsapp_click_extra' : 'whatsapp_contato',
       transaction_id: 'wa-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8),
       link_url: href,
       link_location: where,
@@ -857,6 +859,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     setSending(true);
     send(d).then(function () {
       // Só registra a conversão depois que o Formspree confirmou o envio
+      window.__almeidaLeadConverted = true;
       window.dataLayer.push({ event: 'lead_confirmado', transaction_id: newId('lead'), form_name: 'solicitar_orcamento_b2b' });
       setSending(false);
       document.getElementById('successWa').href = url;
@@ -878,7 +881,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.getElementById('leadReset').addEventListener('click', function () {
     form.reset(); syncAmbientes(); execHint.textContent = ''; execHint.hidden = true;
     form.querySelectorAll('.invalid').forEach(function (f) { f.classList.remove('invalid'); });
-    clearError(); card.classList.remove('sent'); document.getElementById('b-tipo-1').focus();
+    clearError(); window.__almeidaLeadConverted = false; card.classList.remove('sent'); document.getElementById('b-tipo-1').focus();
   });
 })();
 </script>
