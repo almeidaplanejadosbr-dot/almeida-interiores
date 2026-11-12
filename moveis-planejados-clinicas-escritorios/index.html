@@ -357,6 +357,82 @@ footer p { flex-basis: 100%; color: rgba(245,237,216,0.32); font-size: 0.78rem; 
   *, *::before, *::after { transition: none !important; }
 }
 
+/* ---------- Formulário B2B ---------- */
+:root { --icon-bg:#fff6dd; --error:#A3301C; --text-body:rgba(245,237,216,0.82); --text-muted:rgba(245,237,216,0.65); --ease:cubic-bezier(0.25,0.1,0.25,1); --dur-fast:0.3s; }
+#orcamento { background: var(--brown-dark); background-image: var(--pattern); padding: 96px 0; color: var(--cream); scroll-margin-top: 72px; }
+.orc-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+.orc-intro { position: sticky; top: 110px; }
+.orc-intro h2 { color: var(--white); }
+.orc-lead { color: var(--text-body); font-size: 1rem; line-height: 1.8; margin-bottom: 2.2rem; max-width: 440px; }
+.orc-steps { list-style: none; border-top: 1px solid rgba(200,132,26,0.2); }
+.orc-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 6px 14px; padding: 20px 0; border-bottom: 1px solid rgba(200,132,26,0.2); }
+.orc-steps .step-n { grid-row: span 2; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--gold); padding-top: 2px; }
+.orc-steps h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); }
+.orc-steps p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+.orc-card { position: relative; background: var(--cream-light); color: var(--brown); border-radius: var(--radius); padding: 44px 44px 40px; box-shadow: 0 40px 80px -40px rgba(0,0,0,0.6); }
+.orc-card-head { margin-bottom: 28px; }
+.orc-card-head h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brown-dark); margin-bottom: 6px; }
+.orc-card-head p { font-size: 0.9rem; color: var(--text-warm); }
+.form-group-title { display: flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-muted); margin: 0 0 18px; }
+.form-group-title::after { content: ''; flex: 1; height: 1px; background: rgba(59,31,14,0.12); }
+.form-grid + .form-group-title { margin-top: 32px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+fieldset.field { border: 0; padding: 0; margin: 0; }
+.field.full { grid-column: 1 / -1; }
+.field > label, .field > .field-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown-dark); }
+.field > legend { float: left; width: 100%; padding: 0; margin-bottom: 2px; }
+.field > legend + .field-hint { margin-top: -6px; }
+.field .opt { font-weight: 500; letter-spacing: 0.04em; text-transform: none; color: var(--text-warm); }
+.input { width: 100%; font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--brown-dark); background: var(--white); border: 1px solid rgba(59,31,14,0.18); border-radius: var(--radius); padding: 14px 16px; min-height: 50px; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); -webkit-appearance: none; appearance: none; }
+.input::placeholder { color: rgba(122,92,62,0.55); }
+.input:hover { border-color: rgba(59,31,14,0.32); }
+.input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,132,26,0.18); }
+.input-suffix { position: relative; }
+.input-suffix .input { padding-right: 52px; }
+.input-suffix span { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--text-warm); pointer-events: none; }
+.input-suffix input::-webkit-outer-spin-button, .input-suffix input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.input-suffix input[type=number] { -moz-appearance: textfield; }
+.choice-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 0; }
+.choice-group--multi { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.choice label { display: flex; align-items: center; gap: 12px; min-height: 50px; padding: 12px 16px; background: var(--white); border: 1px solid rgba(59,31,14,0.18); border-radius: var(--radius); font-size: 0.95rem; color: var(--brown-dark); cursor: pointer; transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.choice label::before { content: ''; width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid rgba(59,31,14,0.35); transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.choice input:checked + label { border-color: var(--gold); background: var(--icon-bg); }
+.choice input:checked + label::before { border-color: var(--gold); box-shadow: inset 0 0 0 4px var(--white), inset 0 0 0 8px var(--gold); }
+.choice.check label::before { border-radius: 3px; }
+.choice.check input:checked + label::before { background: var(--gold) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='2.5,6.2 5,8.5 9.5,3.5'/%3E%3C/svg%3E") center/12px no-repeat; box-shadow: none; }
+.choice input:focus-visible + label { box-shadow: 0 0 0 3px rgba(200,132,26,0.25); }
+.choice input:disabled { cursor: not-allowed; }
+.choice input:disabled + label { opacity: 0.4; cursor: not-allowed; }
+.choice-group--multi:has(#b-amb-completo:checked) .choice:not(:first-child) input { pointer-events: none; }
+.choice-group--multi:has(#b-amb-completo:checked) .choice:not(:first-child) label { opacity: 0.4; }
+.field-hint { font-size: 0.82rem; color: var(--text-warm); line-height: 1.5; }
+.field-error { font-size: 0.8rem; color: var(--error); line-height: 1.4; display: none; }
+.field.invalid .input, .field.invalid .choice label { border-color: var(--error); }
+.field.invalid .field-error { display: block; }
+.form-actions { margin-top: 32px; }
+.form-actions .btn { width: 100%; padding: 17px 24px; }
+.form-actions .btn[disabled] { opacity: 0.7; cursor: progress; transform: none; }
+.form-actions .btn[aria-busy="true"] svg { display: none; }
+.form-status { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--error); border-radius: var(--radius); background: rgba(163,48,28,0.06); font-size: 0.88rem; line-height: 1.55; color: var(--error); }
+.form-status a { color: var(--error); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.form-note { margin-top: 14px; font-size: 0.8rem; color: var(--text-warm); text-align: center; }
+.form-note a { color: var(--brown-dark); text-decoration: underline; text-underline-offset: 2px; }
+.hp { position: absolute; top: 0; left: 0; width: 1px; height: 1px; opacity: 0; overflow: hidden; clip-path: inset(50%); pointer-events: none; }
+.orc-success { display: none; }
+.orc-card.sent form, .orc-card.sent .orc-card-head { display: none; }
+.orc-card.sent .orc-success { display: block; }
+.success-mark { width: 52px; height: 52px; border-radius: 50%; background: var(--icon-bg); border: 1px solid rgba(200,132,26,0.35); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; color: var(--gold-muted); }
+.orc-success h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--brown-dark); margin-bottom: 10px; }
+.orc-success p { font-size: 0.95rem; color: var(--text-warm); line-height: 1.7; margin-bottom: 14px; }
+.success-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.btn-dark { background: var(--brown-dark); color: var(--cream); }
+.btn-dark:hover { background: var(--brown); }
+.btn-text { background: none; border: 0; padding: 10px 4px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brown-dark); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 1000px) { .orc-grid { grid-template-columns: 1fr; gap: 44px; } .orc-intro { position: static; } }
+@media (max-width: 640px) { #orcamento { padding: 64px 0; } .orc-card { padding: 30px 20px 28px; } .form-grid, .choice-group { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -388,7 +464,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <a href="https://wa.me/5511911501690?text=Ol%C3%A1%21%20Vi%20a%20p%C3%A1gina%20de%20m%C3%B3veis%20para%20cl%C3%ADnicas%20e%20escrit%C3%B3rios%20no%20site%20e%20quero%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="btn btn-gold" data-wa-location="topo_pagina_servico">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36A9.4 9.4 0 0 1 2.6 12.06c0-5.2 4.24-9.44 9.46-9.44 2.52 0 4.9.99 6.68 2.77a9.38 9.38 0 0 1 2.77 6.68c0 5.21-4.24 9.44-9.45 9.44m8.04-17.48A11.3 11.3 0 0 0 12.05.7C5.78.7.68 5.8.68 12.06c0 2 .52 3.96 1.52 5.68L.58 23.3l5.7-1.5a11.3 11.3 0 0 0 5.77 1.47h.01c6.26 0 11.36-5.1 11.37-11.36 0-3.03-1.18-5.89-3.33-8.03"/></svg>Pedir orçamento pelo WhatsApp
           </a>
-          <a href="/#orcamento" class="btn btn-outline">Preencher formulário <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg></a>
+          <a href="#orcamento" class="btn btn-outline">Preencher formulário <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg></a>
         </div>
       </div>
       <figure class="head-media">
@@ -435,6 +511,139 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+
+  <section id="orcamento">
+    <div class="container orc-grid">
+      <div class="orc-intro">
+        <p class="label">Orçamento para empresas</p>
+        <h2>CONTE SOBRE O <span>SEU ESPAÇO</span></h2>
+        <p class="orc-lead">Com algumas informações sobre a clínica, o consultório ou o escritório, nossa equipe prepara uma proposta sob medida para o seu projeto.</p>
+        <ol class="orc-steps">
+          <li><span class="step-n">01</span><h3>Você envia os dados do espaço</h3><p>Tipo de negócio, ambientes e metragem. Leva cerca de um minuto e nenhuma informação é publicada.</p></li>
+          <li><span class="step-n">02</span><h3>Projeto executivo</h3><p>Já tem o projeto executivo? Usamos o seu, inclusive o do seu arquiteto. Não tem? Desenvolvemos um projeto completo, com 3D e render, em um orçamento à parte.</p></li>
+          <li><span class="step-n">03</span><h3>Orçamento da marcenaria</h3><p>Com o projeto executivo em mãos, enviamos a proposta detalhada da marcenaria pelo WhatsApp ou e-mail.</p></li>
+        </ol>
+      </div>
+
+      <div class="orc-card" id="orcCard">
+        <div class="orc-card-head">
+          <h3>Solicitar orçamento</h3>
+          <p>Campos marcados com * são obrigatórios.</p>
+        </div>
+
+        <form id="leadFormB2B" novalidate>
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <p class="form-group-title">Sobre o espaço</p>
+          <div class="form-grid">
+            <fieldset class="field full">
+              <legend class="field-label">Tipo de negócio *</legend>
+              <div class="choice-group">
+              <div class="choice"><input type="radio" id="b-tipo-1" name="tipo" value="Clínica ou consultório"><label for="b-tipo-1">Clínica ou consultório</label></div>
+              <div class="choice"><input type="radio" id="b-tipo-2" name="tipo" value="Escritório"><label for="b-tipo-2">Escritório</label></div>
+              <div class="choice"><input type="radio" id="b-tipo-3" name="tipo" value="Loja ou espaço comercial"><label for="b-tipo-3">Loja ou espaço comercial</label></div>
+              <div class="choice"><input type="radio" id="b-tipo-4" name="tipo" value="Outro"><label for="b-tipo-4">Outro</label></div>
+              </div>
+              <span class="field-error" id="e-tipo">Selecione o tipo de negócio.</span>
+            </fieldset>
+
+            <fieldset class="field full">
+              <legend class="field-label">O que você precisa? *</legend>
+              <span class="field-hint" id="h-ambientes">Marque uma ou mais opções.</span>
+              <div class="choice-group choice-group--multi">
+              <div class="choice check"><input type="checkbox" id="b-amb-completo" name="ambientes" value="Espaço completo"><label for="b-amb-completo">Espaço completo</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-2" name="ambientes" value="Recepção e sala de espera"><label for="b-amb-2">Recepção e sala de espera</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-3" name="ambientes" value="Consultório ou sala de atendimento"><label for="b-amb-3">Consultório / atendimento</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-4" name="ambientes" value="Sala de reunião"><label for="b-amb-4">Sala de reunião</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-5" name="ambientes" value="Estações de trabalho"><label for="b-amb-5">Estações de trabalho</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-6" name="ambientes" value="Copa e áreas de apoio"><label for="b-amb-6">Copa e apoio</label></div>
+              <div class="choice check"><input type="checkbox" id="b-amb-7" name="ambientes" value="Outro ambiente"><label for="b-amb-7">Outro ambiente</label></div>
+              </div>
+              <span class="field-error" id="e-ambientes">Selecione pelo menos uma opção.</span>
+            </fieldset>
+
+            <div class="field full">
+              <label for="b-metragem">Metragem aproximada do espaço *</label>
+              <div class="input-suffix">
+                <input class="input" type="number" id="b-metragem" name="metragem" inputmode="decimal" min="10" max="5000" step="any" placeholder="Ex.: 80" required>
+                <span>m²</span>
+              </div>
+              <span class="field-error" id="e-metragem">Informe a metragem aproximada (entre 10 e 5.000 m²).</span>
+            </div>
+
+            <fieldset class="field full">
+              <legend class="field-label">Quando precisa do espaço pronto? *</legend>
+              <div class="choice-group">
+              <div class="choice"><input type="radio" id="b-prazo-1" name="prazo" value="O quanto antes"><label for="b-prazo-1">O quanto antes</label></div>
+              <div class="choice"><input type="radio" id="b-prazo-2" name="prazo" value="Em até 3 meses"><label for="b-prazo-2">Em até 3 meses</label></div>
+              <div class="choice"><input type="radio" id="b-prazo-3" name="prazo" value="De 3 a 6 meses"><label for="b-prazo-3">De 3 a 6 meses</label></div>
+              <div class="choice"><input type="radio" id="b-prazo-4" name="prazo" value="Daqui a mais de 6 meses"><label for="b-prazo-4">Mais de 6 meses</label></div>
+              </div>
+              <span class="field-error" id="e-prazo">Indique o prazo.</span>
+            </fieldset>
+
+            <fieldset class="field full">
+              <legend class="field-label">Possui projeto executivo de marcenaria? *</legend>
+              <span class="field-hint">É o detalhamento técnico de cada móvel: medidas, materiais e ferragens.</span>
+              <div class="choice-group">
+              <div class="choice"><input type="radio" id="b-exec-1" name="executivo" value="Sim, já tenho"><label for="b-exec-1">Sim, já tenho (meu ou do meu arquiteto)</label></div>
+              <div class="choice"><input type="radio" id="b-exec-2" name="executivo" value="Não, quero que a Almeida desenvolva"><label for="b-exec-2">Não, quero que a Almeida desenvolva</label></div>
+              <div class="choice"><input type="radio" id="b-exec-3" name="executivo" value="Não sei"><label for="b-exec-3">Não sei</label></div>
+              </div>
+              <span class="field-hint" id="h-executivo" hidden></span>
+              <span class="field-error" id="e-executivo">Indique se possui o projeto executivo.</span>
+            </fieldset>
+
+            <div class="field full">
+              <label for="b-local">Bairro ou cidade do espaço <span class="opt">(opcional)</span></label>
+              <input class="input" type="text" id="b-local" name="local" maxlength="140" placeholder="Ex.: Moema, São Paulo">
+            </div>
+          </div>
+
+          <p class="form-group-title">Seus dados</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="b-nome">Nome *</label>
+              <input class="input" type="text" id="b-nome" name="nome" autocomplete="name" required maxlength="120">
+              <span class="field-error" id="e-nome">Informe seu nome.</span>
+            </div>
+            <div class="field">
+              <label for="b-empresa">Empresa <span class="opt">(opcional)</span></label>
+              <input class="input" type="text" id="b-empresa" name="empresa" autocomplete="organization" maxlength="140">
+            </div>
+            <div class="field">
+              <label for="b-telefone">WhatsApp *</label>
+              <input class="input" type="tel" id="b-telefone" name="telefone" autocomplete="tel-national" inputmode="tel" placeholder="(11) 90000-0000" required maxlength="16">
+              <span class="field-error" id="e-telefone">Informe um telefone com DDD.</span>
+            </div>
+            <div class="field">
+              <label for="b-email">E-mail <span class="opt">(opcional)</span></label>
+              <input class="input" type="email" id="b-email" name="email" autocomplete="email" inputmode="email" maxlength="160">
+              <span class="field-error" id="e-email">Confira o e-mail digitado.</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-gold" id="leadSubmit"><span class="btn-label">Enviar solicitação</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg></button>
+            <p class="form-status" id="leadStatus" role="alert" hidden></p>
+            <p class="form-note">Ao enviar, você concorda com a nossa <a href="/politica-de-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>. Seus dados chegam direto à nossa equipe e abrimos o WhatsApp para agilizar o contato.</p>
+          </div>
+        </form>
+
+        <div class="orc-success" role="status" aria-live="polite">
+          <div class="success-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,12.5 10,17.5 19,7"/></svg></div>
+          <h3>Solicitação enviada</h3>
+          <p>Recebemos os dados do seu espaço e nossa equipe vai entrar em contato. <span id="successWaMsg">Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.</span></p>
+          <p>Respondemos em até 2 horas no horário comercial.</p>
+          <div class="success-actions">
+            <a href="https://wa.me/5511911501690" target="_blank" rel="noopener" class="btn btn-dark" id="successWa" data-wa-location="pos_formulario"><span id="successWaLabel">Abrir WhatsApp novamente</span></a>
+            <button type="button" class="btn-text" id="leadReset">Nova solicitação</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block alt">
     <div class="container narrow">
       <h2>Perguntas <span>frequentes</span></h2>
@@ -456,7 +665,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>Mande uma mensagem e receba um orçamento personalizado para o seu espaço, sem compromisso. Respondemos em até 2 horas no horário comercial e atendemos toda a Grande São Paulo.</p>
       <div class="btns center">
         <a href="https://wa.me/5511911501690?text=Ol%C3%A1%21%20Vi%20a%20p%C3%A1gina%20de%20m%C3%B3veis%20para%20cl%C3%ADnicas%20e%20escrit%C3%B3rios%20no%20site%20e%20quero%20um%20or%C3%A7amento." target="_blank" rel="noopener" class="btn btn-wa" data-wa-location="cta_pagina_servico"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36A9.4 9.4 0 0 1 2.6 12.06c0-5.2 4.24-9.44 9.46-9.44 2.52 0 4.9.99 6.68 2.77a9.38 9.38 0 0 1 2.77 6.68c0 5.21-4.24 9.44-9.45 9.44m8.04-17.48A11.3 11.3 0 0 0 12.05.7C5.78.7.68 5.8.68 12.06c0 2 .52 3.96 1.52 5.68L.58 23.3l5.7-1.5a11.3 11.3 0 0 0 5.77 1.47h.01c6.26 0 11.36-5.1 11.37-11.36 0-3.03-1.18-5.89-3.33-8.03"/></svg>(11) 91150-1690</a>
-        <a href="/#orcamento" class="btn btn-outline">Formulário de orçamento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg></a>
+        <a href="#orcamento" class="btn btn-outline">Formulário de orçamento <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg></a>
       </div>
     </div>
   </section>
@@ -514,6 +723,161 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       page_type: 'servico_clinicas-escritorios'
     });
   }, true);
+})();
+</script>
+
+<script>
+/* Formulário B2B: mesmo envio (Formspree) e mesma conversão (lead_confirmado)
+   do formulário da página inicial, com perguntas para empresas. */
+(function () {
+  var WA_NUMBER = '5511911501690';
+  var LEAD_ENDPOINT = 'https://formspree.io/f/xyezrabr';
+  var form = document.getElementById('leadFormB2B');
+  if (!form) return;
+  var card = document.getElementById('orcCard');
+  var phone = document.getElementById('b-telefone');
+  window.dataLayer = window.dataLayer || [];
+  function newId(p) { return p + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
+
+  function formatPhone(v) {
+    var d = v.replace(/\D/g, '').slice(0, 11);
+    if (d.length <= 2) return d.length ? '(' + d : '';
+    if (d.length <= 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length <= 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+    return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  }
+  phone.addEventListener('input', function () { phone.value = formatPhone(phone.value); });
+
+  function checked(name) {
+    return Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; });
+  }
+  var validators = {
+    tipo: function () { return checked('tipo').length === 1; },
+    ambientes: function () { return checked('ambientes').length > 0; },
+    metragem: function () { var m = parseFloat(String(form.metragem.value).replace(',', '.')); return m >= 10 && m <= 5000; },
+    prazo: function () { return checked('prazo').length === 1; },
+    executivo: function () { return checked('executivo').length === 1; },
+    nome: function () { return form.nome.value.trim().length >= 3; },
+    telefone: function () { var n = form.telefone.value.replace(/\D/g, '').length; return n === 10 || n === 11; },
+    email: function () { var v = form.email.value.trim(); return v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+  };
+  var fieldOf = { tipo: 'b-tipo-1', ambientes: 'b-amb-completo', metragem: 'b-metragem', prazo: 'b-prazo-1', executivo: 'b-exec-1', nome: 'b-nome', telefone: 'b-telefone', email: 'b-email' };
+  var groups = { tipo: true, ambientes: true, prazo: true, executivo: true };
+  function check(name) {
+    var ok = validators[name]();
+    var input = document.getElementById(fieldOf[name]);
+    input.closest('.field').classList.toggle('invalid', !ok);
+    if (!groups[name]) input.setAttribute('aria-invalid', String(!ok));
+    return ok;
+  }
+  ['metragem', 'nome', 'telefone', 'email'].forEach(function (name) {
+    var input = document.getElementById(fieldOf[name]);
+    input.addEventListener('blur', function () { check(name); });
+    input.addEventListener('input', function () { if (input.closest('.field').classList.contains('invalid')) check(name); });
+  });
+  ['tipo', 'prazo'].forEach(function (name) {
+    form.querySelectorAll('input[name="' + name + '"]').forEach(function (r) { r.addEventListener('change', function () { check(name); }); });
+  });
+
+  // "Espaço completo" já inclui todos os ambientes
+  var completo = document.getElementById('b-amb-completo');
+  var avulsos = Array.prototype.slice.call(form.querySelectorAll('input[name="ambientes"]')).filter(function (o) { return o !== completo; });
+  var ambHint = document.getElementById('h-ambientes'), AMB_HINT = ambHint.textContent;
+  function syncAmbientes() {
+    avulsos.forEach(function (o) { if (completo.checked) o.checked = false; o.disabled = completo.checked; });
+    ambHint.textContent = completo.checked ? 'O espaço completo já inclui todos os ambientes.' : AMB_HINT;
+  }
+  form.querySelectorAll('input[name="ambientes"]').forEach(function (b) { b.addEventListener('change', function () { syncAmbientes(); check('ambientes'); }); });
+
+  var execHint = document.getElementById('h-executivo');
+  var EXEC_HINTS = {
+    'Sim, já tenho': 'Ótimo! Depois do envio, mande o projeto executivo pelo WhatsApp (PDF) para orçarmos a marcenaria.',
+    'Não, quero que a Almeida desenvolva': 'Sem problema: desenvolvemos um projeto completo para o seu espaço, com executivo, 3D e render. Ele é orçado à parte, antes da marcenaria.',
+    'Não sei': 'Tudo bem! No primeiro contato explicamos o que é e indicamos o melhor caminho para o seu espaço.'
+  };
+  form.querySelectorAll('input[name="executivo"]').forEach(function (r) {
+    r.addEventListener('change', function () { execHint.textContent = EXEC_HINTS[r.value] || ''; execHint.hidden = !execHint.textContent; check('executivo'); });
+  });
+
+  function buildMessage(d) {
+    var l = ['Olá! Gostaria de um orçamento para o meu espaço comercial.', '', 'Nome: ' + d.nome];
+    if (d.empresa) l.push('Empresa: ' + d.empresa);
+    l.push('Telefone: ' + d.telefone);
+    if (d.email) l.push('E-mail: ' + d.email);
+    l.push('Tipo de negócio: ' + d.tipo, 'Precisa de: ' + d.ambientes, 'Metragem do espaço: ' + d.metragem + ' m²', 'Prazo: ' + d.prazo, 'Projeto executivo: ' + d.executivo);
+    if (d.local) l.push('Bairro/cidade: ' + d.local);
+    return l.join('\n');
+  }
+
+  var submitBtn = document.getElementById('leadSubmit');
+  var submitLabel = submitBtn.querySelector('.btn-label'), SUBMIT_TEXT = submitLabel.textContent;
+  var statusBox = document.getElementById('leadStatus');
+  var sending = false;
+  function setSending(on) { sending = on; submitBtn.disabled = on; submitBtn.setAttribute('aria-busy', on ? 'true' : 'false'); submitLabel.textContent = on ? 'Enviando solicitação…' : SUBMIT_TEXT; }
+  function showError() { statusBox.innerHTML = 'Não foi possível enviar agora. Verifique sua conexão e tente novamente, ou <a href="https://wa.me/' + WA_NUMBER + '" target="_blank" rel="noopener">fale conosco pelo WhatsApp</a>.'; statusBox.hidden = false; }
+  function clearError() { statusBox.textContent = ''; statusBox.hidden = true; }
+
+  function send(d) {
+    var p = new FormData();
+    p.append('Origem', 'Página clínicas e escritórios (B2B)');
+    p.append('Nome', d.nome); p.append('Empresa', d.empresa || '—');
+    p.append('Telefone', d.telefone); p.append('E-mail', d.email || '—');
+    p.append('Tipo de negócio', d.tipo); p.append('Precisa de', d.ambientes);
+    p.append('Metragem do espaço', d.metragem + ' m²'); p.append('Prazo', d.prazo);
+    p.append('Projeto executivo', d.executivo); p.append('Bairro/cidade', d.local || '—');
+    p.append('_subject', '[B2B] Novo pedido de orçamento: ' + d.nome + (d.empresa ? ' – ' + d.empresa : '') + ' (' + d.tipo + ')');
+    if (d.email) p.append('_replyto', d.email);
+    p.append('_gotcha', form._gotcha.value);
+    var ctrl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : null;
+    return fetch(LEAD_ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: p, signal: ctrl ? ctrl.signal : undefined })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (j) {
+          if (timer) clearTimeout(timer);
+          if (!res.ok || j.ok !== true) throw new Error('Formspree recusou o envio (HTTP ' + res.status + ')');
+        });
+      }, function (err) { if (timer) clearTimeout(timer); throw err; });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sending) return;
+    clearError();
+    var first = null;
+    Object.keys(fieldOf).forEach(function (n) { if (!check(n) && !first) first = document.getElementById(fieldOf[n]); });
+    if (first) { first.focus(); return; }
+    var d = {
+      nome: form.nome.value.trim(), empresa: form.empresa.value.trim(), telefone: form.telefone.value.trim(), email: form.email.value.trim(),
+      tipo: checked('tipo')[0], ambientes: checked('ambientes').join(', '), metragem: String(form.metragem.value).replace('.', ','),
+      prazo: checked('prazo')[0], executivo: checked('executivo')[0], local: form.local.value.trim()
+    };
+    var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(buildMessage(d));
+    setSending(true);
+    send(d).then(function () {
+      // Só registra a conversão depois que o Formspree confirmou o envio
+      window.dataLayer.push({ event: 'lead_confirmado', transaction_id: newId('lead'), form_name: 'solicitar_orcamento_b2b' });
+      setSending(false);
+      document.getElementById('successWa').href = url;
+      card.classList.add('sent');
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var win = window.open(url, '_blank');
+      if (win) win.opener = null;
+      document.getElementById('successWaMsg').textContent = win
+        ? 'Também abrimos o WhatsApp com a sua mensagem pronta, caso prefira conversar por lá agora.'
+        : 'Se quiser agilizar, toque em “Abrir WhatsApp” para enviar a mensagem pronta.';
+      document.getElementById('successWaLabel').textContent = win ? 'Abrir WhatsApp novamente' : 'Abrir WhatsApp';
+    }).catch(function (err) {
+      if (window.console) console.warn('[orçamento B2B] envio não confirmado:', err && err.message);
+      setSending(false);
+      showError();
+    });
+  });
+
+  document.getElementById('leadReset').addEventListener('click', function () {
+    form.reset(); syncAmbientes(); execHint.textContent = ''; execHint.hidden = true;
+    form.querySelectorAll('.invalid').forEach(function (f) { f.classList.remove('invalid'); });
+    clearError(); card.classList.remove('sent'); document.getElementById('b-tipo-1').focus();
+  });
 })();
 </script>
 </body>
